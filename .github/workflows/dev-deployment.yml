@@ -48,7 +48,7 @@ jobs:
         run: echo "::set-output name=tag::$(echo $GITHUB_SHA | cut -c1-7)"
 
       - name: Build image
-        run: docker build --build-arg ACTIVE_PROFILE=${{ secrets.DEV_ACTIVE_PROFILE }} -f api/docker/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}:${{ steps.generate_tag.outputs.tag }} .
+        run: docker build --build-arg ACTIVE_PROFILE=${{ secrets.DEV_ACTIVE_PROFILE }} -f docker/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}:${{ steps.generate_tag.outputs.tag }} .
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -92,7 +92,7 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
-          source: 'docker-compose.yml'
+          source: 'docker/docker-compose.yml'
           target: 'compose'
           rm: true
 
