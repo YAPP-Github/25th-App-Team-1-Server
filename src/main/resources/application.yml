@@ -1,20 +1,19 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+  profiles:
+    active: local
 
-  jpa:
-    show-sql: true
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
+---
+# local profile
+# application-local.yml
+spring:
+  config:
+    activate:
+      on-profile: local
 
-  h2:
-    console:
-      enabled: true
+---
+# dev profile
+# application-dev.yml
+spring:
+  config:
+    activate:
+      on-profile: dev
