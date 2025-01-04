@@ -36,19 +36,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Create .env file
-      - name: Create .env file
-        run: |
-          touch .env
-          echo HOST=${{ secrets.HOST }} >> .env
-          echo KEY=${{ secrets.KEY }} >> .env
-          echo SPRING_DATABASE_HOST=${{ SPRING_DATABASE_HOST }} >> .env
-          echo SPRING_DATABASE_SCHEMA=${{ SPRING_DATABASE_SCHEMA }} > .env
-          echo SPRING_DATABASE_USERNAME=${{ SPRING_DATABASE_USERNAME }} > .env
-          echo SPRING_DATABASE_PASSWORD=${{ SPRING_DATABASE_PASSWORD }} > .env
-          echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} > .env
-          echo DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} > .env
-
       # Gradle Build
       - name: Build with Gradle
         run: ./gradlew build -x test
@@ -89,14 +76,18 @@ jobs:
           key: ${{ secrets.KEY }}
           script: mkdir -p /home/ubuntu/srv/ubuntu
 
-      - name: copy source via ssh key
-        uses: burnett01/rsync-deployments@4.1
-        with:
-          switches: -avzr --delete
-          remote_path: /home/ubuntu/srv/ubuntu/
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.KEY }}
+      # Create .env file
+      - name: Create .env file
+        run: |
+          touch .env
+          echo HOST=${{ secrets.HOST }} >> .env
+          echo KEY=${{ secrets.KEY }} >> .env
+          echo SPRING_DATABASE_HOST=${{ SPRING_DATABASE_HOST }} >> .env
+          echo SPRING_DATABASE_SCHEMA=${{ SPRING_DATABASE_SCHEMA }} > .env
+          echo SPRING_DATABASE_USERNAME=${{ SPRING_DATABASE_USERNAME }} > .env
+          echo SPRING_DATABASE_PASSWORD=${{ SPRING_DATABASE_PASSWORD }} > .env
+          echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} > .env
+          echo DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} > .env
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
