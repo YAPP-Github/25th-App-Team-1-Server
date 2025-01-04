@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     container_name: app
-    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_API_REPOSITORY_NAME}:${IMAGE_TAG}
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${IMAGE_TAG}
     expose:
       - "8080"
     ports:
