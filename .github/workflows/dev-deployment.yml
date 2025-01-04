@@ -1,9 +1,9 @@
 name: Dev Deployment
 
 on:
-  push:
+  pull_request:
     branches:
-      - feature
+      - feature/deploy
 
 permissions:
   contents: read
