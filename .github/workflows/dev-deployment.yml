@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-docker-operations:
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.generate_tag.outputs.tag }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
