@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - feature/deploy
+    paths:
+      - "src/**"
 
 permissions:
   contents: read
