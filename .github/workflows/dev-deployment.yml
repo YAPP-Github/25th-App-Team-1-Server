@@ -1,9 +1,8 @@
 name: Dev Deployment
 
 on:
-  pull_request:
-    branches:
-      - feature/deploy
+  push:
+    branches: [ feature/deploy ]
     paths:
       - "src/**"
 
