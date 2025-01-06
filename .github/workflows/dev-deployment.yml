@@ -95,7 +95,7 @@ jobs:
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
           source: "docker/docker-compose.yml,docker/scripts/docker-install.sh"
-          target: 'compose'
+          target: 'compose/'
           rm: true
 
       - name: SSH remote and Run Docker Compose
