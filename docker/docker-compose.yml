@@ -20,7 +20,8 @@ services:
       - app
     container_name: nginx
     restart: always
-    volumes:
-      - ../nginx/default.conf:/etc/nginx/conf.d
+    build:
+      dockerfile: Dockerfile-nginx
+      context: ./docker/nginx
     ports:
       - "80:80"

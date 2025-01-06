@@ -50,7 +50,7 @@ jobs:
         run: echo "::set-output name=tag::$(echo $GITHUB_SHA | cut -c1-7)"
 
       - name: Build image
-        run: docker build --build-arg ACTIVE_PROFILE=${{ secrets.DEV_ACTIVE_PROFILE }} -f docker/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}:${{ steps.generate_tag.outputs.tag }} .
+        run: docker build --build-arg ACTIVE_PROFILE=${{ secrets.DEV_ACTIVE_PROFILE }} -f docker/Dockerfile-nginx -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}:${{ steps.generate_tag.outputs.tag }} .
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -95,6 +95,17 @@ jobs:
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
           source: "docker/docker-compose.yml,docker/scripts/docker-install.sh"
+          target: 'compose'
+          rm: true
+
+      - name: Copy Nginx files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEV_SERVER_IP }}
+          username: ${{ secrets.DEV_SERVER_USERNAME }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          port: ${{ secrets.DEV_SSH_PORT }}
+          source: "docker/nginx/default.conf,docker/nginx/Dockerfile-nginx"
           target: 'compose'
           rm: true
 
