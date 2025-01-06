@@ -18,9 +18,9 @@ services:
   nginx:
     depends_on:
       - app
+    container_name: nginx
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./deploy/nginx
+    volumes:
+      - ../nginx/default.conf:/etc/nginx/conf.d
     ports:
       - "80:80"
