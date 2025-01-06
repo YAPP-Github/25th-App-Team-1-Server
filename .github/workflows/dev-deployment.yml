@@ -94,18 +94,7 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
-          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh"
-          target: 'compose'
-          rm: true
-
-      - name: Copy Nginx files
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.DEV_SERVER_IP }}
-          username: ${{ secrets.DEV_SERVER_USERNAME }}
-          key: ${{ secrets.DEV_SSH_KEY }}
-          port: ${{ secrets.DEV_SSH_PORT }}
-          source: "docker/nginx/default.conf,docker/nginx/Dockerfile-nginx"
+          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/default.conf,docker/nginx/Dockerfile-nginx"
           target: 'compose'
           rm: true
 
