@@ -48,7 +48,7 @@ tasks.named('test') {
 }
 
 jacoco {
-	toolVersion = '0.8.8'
+	toolVersion = '0.8.10'
 }
 
 jacocoTestReport {
@@ -68,12 +68,46 @@ jacocoTestReport {
 			fileTree(dir: it, exclude: [
 					'**/*Application*',
 					'**/*Controller*',
-					'**/config/**',
-					'**/dto/**',
+					'**/config/*',
+					'**/dto/*',
 					'**/*Dto*',
-					'**/exception/**',
+					'**/exception/*',
 					'**/*Exception*'
 			])
 		}))
+	}
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			failOnViolation = false  // TODO: 테스트 코드 추가 시 제거 (jacoco 세팅용)
+			enabled = true
+			element = 'CLASS'
+
+			limit {
+				counter = 'LINE' // 라인 커버리지 기준
+				value = 'COVEREDRATIO'
+				minimum = 0.70 // 최소 70% 이상 커버리지 필요
+			}
+
+			limit {
+				counter = 'BRANCH' // 분기 커버리지 기준
+				value = 'COVEREDRATIO'
+				minimum = 0.70 // 최소 70% 이상 커버리지 필요
+			}
+
+			excludes = [
+					'**.*Application*',
+					'**.*Controller*',
+					'**.config.*',
+					'**.dto.*',
+					'**.*Dto*',
+					'**.exception.*',
+					'**.*Exception*'
+			]
+		}
 	}
 }
