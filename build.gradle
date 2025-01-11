@@ -57,8 +57,10 @@ jacocoTestReport {
 	reports {
 		html.required.set(true)
 		xml.required.set(true)
+		csv.required.set(true)
 		html.outputLocation.set(file(layout.buildDirectory.dir("reports/jacoco/index.html").get().asFile))
 		xml.outputLocation.set(file(layout.buildDirectory.dir("reports/jacoco/index.xml").get().asFile))
+		csv.outputLocation.set(file(layout.buildDirectory.dir("reports/jacoco/index.csv").get().asFile))
 	}
 
 	afterEvaluate {
