@@ -2,9 +2,10 @@ name: Java CI with Gradle
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
-    paths:
-      - "src/**"
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
