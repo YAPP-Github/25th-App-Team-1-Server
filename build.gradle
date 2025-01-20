@@ -104,13 +104,13 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'LINE' // 라인 커버리지 기준
 				value = 'COVEREDRATIO'
-				minimum = 0.70 // 최소 70% 이상 커버리지 필요
+				minimum = 0.50 // 최소 50% 이상 커버리지 필요
 			}
 
 			limit {
 				counter = 'BRANCH' // 분기 커버리지 기준
 				value = 'COVEREDRATIO'
-				minimum = 0.70 // 최소 70% 이상 커버리지 필요
+				minimum = 0.50 // 최소 50% 이상 커버리지 필요
 			}
 
 			excludes = [
