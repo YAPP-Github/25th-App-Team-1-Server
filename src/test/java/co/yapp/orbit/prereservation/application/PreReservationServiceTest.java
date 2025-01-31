@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import co.yapp.orbit.prereservation.application.exception.DuplicatePreReservationException;
 import co.yapp.orbit.prereservation.application.port.in.PreReservationCommand;
 import co.yapp.orbit.prereservation.application.port.out.SavePreReservationPort;
 import co.yapp.orbit.prereservation.domain.PreReservation;
@@ -52,7 +53,7 @@ class PreReservationServiceTest {
             .thenReturn(true);
 
         // when & then
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(DuplicatePreReservationException.class, () ->
             preReservationService.createPreReservation(command)
         );
 

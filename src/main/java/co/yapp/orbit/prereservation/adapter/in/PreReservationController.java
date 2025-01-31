@@ -1,8 +1,8 @@
 package co.yapp.orbit.prereservation.adapter.in;
 
+import co.yapp.orbit.prereservation.adapter.in.request.PreReservationCreateRequest;
 import co.yapp.orbit.prereservation.application.port.in.CreatePreReservationUseCase;
 import co.yapp.orbit.prereservation.application.port.in.PreReservationCommand;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,18 +20,12 @@ public class PreReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createPreReservation(@RequestBody PreReservationCommand command) {
-        try {
-            createPreReservationUseCase.createPreReservation(command);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
-        }
+    public ResponseEntity<?> createPreReservation(@RequestBody PreReservationCreateRequest request) {
+        PreReservationCommand command = new PreReservationCommand(
+            request.getName(),
+            request.getPhoneNumber()
+        );
+        createPreReservationUseCase.createPreReservation(command);
+        return ResponseEntity.ok().build();
     }
 }
