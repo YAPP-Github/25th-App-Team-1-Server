@@ -44,6 +44,9 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
+      - name: Set DEV_SERVER_IP as Environment Variable
+        run: echo "DEV_SERVER_IP=${{ secrets.DEV_SERVER_IP }}" >> $GITHUB_ENV
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

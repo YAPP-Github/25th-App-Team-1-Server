@@ -71,6 +71,10 @@ openapi3 {
 			{
 				url = "http://localhost:8080"
 				description = "Local Server"
+			},
+			{
+				url = "http://${System.getenv('DEV_SERVER_IP')}"
+				description = "Dev Server"
 			}
 	]
 	title = "Orbit API"
