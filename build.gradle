@@ -48,9 +48,22 @@ dependencies {
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.4' // 3
 }
 
+tasks.named('build') {
+	dependsOn 'copyOasToSwagger'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 	finalizedBy 'jacocoTestReport'
+}
+
+tasks.register("copyOasToSwagger", Copy) {
+	dependsOn 'openapi3'
+	doFirst {
+		delete('src/main/resources/static/swagger-ui/openapi3.json')
+	}
+	from(layout.buildDirectory.file("api-spec/openapi3.json"))
+	into('src/main/resources/static/swagger-ui/')
 }
 
 openapi3 {
