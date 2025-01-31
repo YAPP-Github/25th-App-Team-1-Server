@@ -20,10 +20,10 @@ public class PreReservationService implements CreatePreReservationUseCase {
     @Transactional
     @Override
     public void createPreReservation(PreReservationCommand command) {
-        if (checkDuplicate(command.getName(), command.getPhoneNumber())) {
+        if (checkDuplicate(command.name(), command.phoneNumber())) {
             throw new DuplicatePreReservationException("중복된 사전 예약이 이미 존재합니다.");
         }
-        PreReservation preReservation = new PreReservation(command.getName(), command.getPhoneNumber());
+        PreReservation preReservation = new PreReservation(command.name(), command.phoneNumber());
         savePreReservationPort.save(preReservation);
     }
 
