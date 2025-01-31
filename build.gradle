@@ -68,7 +68,10 @@ tasks.register("copyOasToSwagger", Copy) {
 
 openapi3 {
 	servers = [
-			{ url = "http://localhost:8080" }
+			{
+				url = "http://localhost:8080"
+				description = "Local Server"
+			}
 	]
 	title = "Orbit API"
 	description = "오르비 백엔드 API 명세서입니다."

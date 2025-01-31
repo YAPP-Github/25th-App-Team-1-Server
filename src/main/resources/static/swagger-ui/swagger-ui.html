@@ -15,18 +15,5 @@
     <script src="/static/swagger-ui/swagger-ui-bundle.js" charset="UTF-8"> </script>
     <script src="/static/swagger-ui/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script src="swagger-initializer.js" charset="UTF-8"> </script>
-
-    <script>
-      window.onload = function () {
-        const ui = SwaggerUIBundle({
-          url: "/static/swagger-ui/openapi3.json",
-          dom_id: "#swagger-ui",
-          deepLinking: true,
-          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-          layout: "StandaloneLayout"
-        });
-        window.ui = ui;
-      };
-    </script>
   </body>
 </html>
