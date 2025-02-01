@@ -14,14 +14,14 @@ public class PreReservationPersistenceAdapter implements SavePreReservationPort 
     }
 
     @Override
-    public boolean existsByNameAndPhoneNumber(String name, String phoneNumber) {
-        return preReservationRepository.existsByNameAndPhoneNumber(name, phoneNumber);
+    public boolean existsByEmailAndPhoneNumber(String email, String phoneNumber) {
+        return preReservationRepository.existsByEmailAndPhoneNumber(email, phoneNumber);
     }
 
     @Override
     public void save(PreReservation preReservation) {
         PreReservationEntity entity = new PreReservationEntity(
-            preReservation.getName(),
+            preReservation.getEmail(),
             preReservation.getPhoneNumber()
         );
         preReservationRepository.save(entity);

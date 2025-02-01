@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 public class PreReservation {
 
-    private final String name;
+    private final String email;
     private final String phoneNumber;
 
-    public PreReservation(String name, String phoneNumber) {
-        this.name = name;
+    public PreReservation(String email, String phoneNumber) {
+        this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
@@ -18,12 +18,12 @@ public class PreReservation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PreReservation that)) return false;
-        return Objects.equals(name, that.name) &&
+        return Objects.equals(email, that.email) &&
             Objects.equals(phoneNumber, that.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, phoneNumber);
+        return Objects.hash(email, phoneNumber);
     }
 }

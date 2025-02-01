@@ -33,7 +33,7 @@ class PreReservationServiceTest {
         // given
         PreReservationCommand command = new PreReservationCommand("홍길동", "010-1234-5678");
 
-        when(savePreReservationPort.existsByNameAndPhoneNumber("홍길동", "010-1234-5678"))
+        when(savePreReservationPort.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678"))
             .thenReturn(false);
 
         // when
@@ -49,7 +49,7 @@ class PreReservationServiceTest {
         // given
         PreReservationCommand command = new PreReservationCommand("홍길동", "010-1234-5678");
 
-        when(savePreReservationPort.existsByNameAndPhoneNumber("홍길동", "010-1234-5678"))
+        when(savePreReservationPort.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678"))
             .thenReturn(true);
 
         // when & then
