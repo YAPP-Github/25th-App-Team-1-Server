@@ -111,12 +111,14 @@ jobs:
           IMAGE_TAG: ${{ needs.build-and-docker-operations.outputs.image_tag }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_REPOSITORY_NAME: ${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}
+          GEMINI_URL: ${{ secrets.GEMINI_URL }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         with:
           host: ${{ secrets.DEV_SERVER_IP }}
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
-          envs: SPRING_DATABASE_SCHEMA,SPRING_DATABASE_USERNAME,SPRING_DATABASE_PASSWORD,SPRING_DATABASE_HOST,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_REPOSITORY_NAME
+          envs: SPRING_DATABASE_SCHEMA,SPRING_DATABASE_USERNAME,SPRING_DATABASE_PASSWORD,SPRING_DATABASE_HOST,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_REPOSITORY_NAME,GEMINI_URL,GEMINI_KEY
           script: |
             cd compose/docker/
             sudo touch .env
@@ -127,7 +129,9 @@ jobs:
             SPRING_DATABASE_HOST=$SPRING_DATABASE_HOST
             IMAGE_TAG=$IMAGE_TAG
             DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME
-            DOCKERHUB_REPOSITORY_NAME=$DOCKERHUB_REPOSITORY_NAME"| sudo tee .env
+            DOCKERHUB_REPOSITORY_NAME=$DOCKERHUB_REPOSITORY_NAME
+            GEMINI_URL=$GEMINI_URL
+            GEMINI_KEY=$GEMINI_KEY"| sudo tee .env
             sh ./scripts/docker-install.sh
             sudo docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY_NAME:$IMAGE_TAG
             sudo docker-compose down

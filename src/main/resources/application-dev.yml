@@ -18,3 +18,8 @@ spring:
 discord:
   webhook:
     url: {DISCORD_WEBHOOK_URL}
+
+gemini:
+  api:
+    url: ${GEMINI_URL}
+    key: ${GEMINI_KEY}
