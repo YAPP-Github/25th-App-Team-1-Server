@@ -22,7 +22,7 @@ public class PreReservationController {
     @PostMapping
     public ResponseEntity<?> createPreReservation(@RequestBody PreReservationCreateRequest request) {
         PreReservationCommand command = new PreReservationCommand(
-            request.getName(),
+            request.getEmail(),
             request.getPhoneNumber()
         );
         createPreReservationUseCase.createPreReservation(command);

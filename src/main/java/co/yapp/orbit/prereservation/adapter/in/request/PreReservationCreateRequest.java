@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PreReservationCreateRequest {
 
-    private String name;
+    private String email;
 
     private String phoneNumber;
 
-    public PreReservationCreateRequest(String name, String phoneNumber) {
-        this.name = name;
+    public PreReservationCreateRequest(String email, String phoneNumber) {
+        this.email = email;
         this.phoneNumber = phoneNumber;
     }
 }

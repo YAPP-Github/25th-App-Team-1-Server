@@ -45,12 +45,12 @@ class PreReservationControllerTest {
         // when & then
         mockMvc.perform(post("/api/v1/prereservations")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"홍길동\", \"phoneNumber\": \"010-1234-5678\"}"))
+                .content("{\"email\": \"byungwook-min@naver.com\", \"phoneNumber\": \"010-1234-5678\"}"))
             .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("이름이 null이면 400 Bad Request")
+    @DisplayName("이메일이 null이면 400 Bad Request")
     void createPreReservation_nullName() throws Exception {
         PreReservationCreateRequest req = new PreReservationCreateRequest(null, "010-1234-5678");
 
@@ -79,14 +79,14 @@ class PreReservationControllerTest {
     @DisplayName("이미 존재할 경우 409 CONFLICT 응답을 반환한다.")
     void createPreReservation_whenDuplicate_shouldReturn409() throws Exception {
         // given
-        Mockito.doThrow(new DuplicatePreReservationException("이미 동일한 이름과 전화번호로 사전예약이 존재합니다."))
+        Mockito.doThrow(new DuplicatePreReservationException("이미 동일한 이메일과 전화번호로 사전예약이 존재합니다."))
             .when(createPreReservationUseCase)
             .createPreReservation(any(PreReservationCommand.class));
 
         // when & then
         mockMvc.perform(post("/api/v1/prereservations")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"홍길동\", \"phoneNumber\": \"010-1234-5678\"}"))
+                .content("{\"email\": \"byungwook-min@naver.com\", \"phoneNumber\": \"010-1234-5678\"}"))
             .andExpect(status().isConflict());
     }
 }

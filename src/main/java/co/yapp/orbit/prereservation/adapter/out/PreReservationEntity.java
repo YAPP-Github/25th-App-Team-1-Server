@@ -16,15 +16,15 @@ public class PreReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String email;
 
     private String phoneNumber;
 
     protected PreReservationEntity() {
     }
 
-    public PreReservationEntity(String name, String phoneNumber) {
-        this.name = name;
+    public PreReservationEntity(String email, String phoneNumber) {
+        this.email = email;
         this.phoneNumber = phoneNumber;
     }
 }

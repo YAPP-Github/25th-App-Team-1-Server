@@ -21,7 +21,7 @@ class PreReservationRepositoryTest {
         preReservationRepository.save(entity);
 
         // when
-        boolean exists = preReservationRepository.existsByNameAndPhoneNumber("홍길동", "010-1234-5678");
+        boolean exists = preReservationRepository.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678");
 
         // then
         assertThat(exists).isTrue();
