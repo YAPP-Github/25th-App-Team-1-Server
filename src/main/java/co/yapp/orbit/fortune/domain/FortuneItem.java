@@ -1,13 +1,9 @@
 package co.yapp.orbit.fortune.domain;
 
-import jakarta.persistence.Embeddable;
 import java.util.Objects;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Embeddable
 @Getter
-@NoArgsConstructor
 public class FortuneItem {
 
     private int score;

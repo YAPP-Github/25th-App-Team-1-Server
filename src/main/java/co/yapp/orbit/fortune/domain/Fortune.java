@@ -1,9 +1,5 @@
 package co.yapp.orbit.fortune.domain;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import java.util.Objects;
 import lombok.Getter;
 
@@ -11,34 +7,11 @@ import lombok.Getter;
 public class Fortune {
 
     private final String dailyFortune;
+
     private final int avgFortuneScore;
-
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "score", column = @Column(name = "STUDY_CAREER_SCORE")),
-        @AttributeOverride(name = "description", column = @Column(name = "STUDY_CAREER_DESCRIPTION"))
-    })
     private final FortuneItem studyCareerFortune;
-
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "score", column = @Column(name = "WEALTH_SCORE")),
-        @AttributeOverride(name = "description", column = @Column(name = "WEALTH_DESCRIPTION"))
-    })
     private final FortuneItem wealthFortune;
-
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "score", column = @Column(name = "HEALTH_SCORE")),
-        @AttributeOverride(name = "description", column = @Column(name = "HEALTH_DESCRIPTION"))
-    })
     private final FortuneItem healthFortune;
-
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "score", column = @Column(name = "LOVE_SCORE")),
-        @AttributeOverride(name = "description", column = @Column(name = "LOVE_DESCRIPTION"))
-    })
     private final FortuneItem loveFortune;
 
     private final String luckyOutfitTop;
