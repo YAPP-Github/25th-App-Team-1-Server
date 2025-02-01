@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'jacoco'
 	id 'org.sonarqube' version '6.0.1.5171'
+	id 'com.epages.restdocs-api-spec' version '0.19.4'
 }
 
 group = 'co.yapp.orbit'
@@ -41,11 +42,45 @@ dependencies {
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Swagger
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.4' // 3
+}
+
+tasks.named('build') {
+	dependsOn 'copyOasToSwagger'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 	finalizedBy 'jacocoTestReport'
+}
+
+tasks.register("copyOasToSwagger", Copy) {
+	dependsOn 'openapi3'
+	doFirst {
+		delete('src/main/resources/static/swagger-ui/openapi3.json')
+	}
+	from(layout.buildDirectory.file("api-spec/openapi3.json"))
+	into('src/main/resources/static/swagger-ui/')
+}
+
+openapi3 {
+	servers = [
+			{
+				url = "http://localhost:8080"
+				description = "Local Server"
+			},
+			{
+				url = "http://dev.orbitalarm.net"
+				description = "Dev Server"
+			}
+	]
+	title = "Orbit API"
+	description = "오르비 백엔드 API 명세서입니다."
+	version = "1.0.0"
+	format = "json"
 }
 
 jacoco {
