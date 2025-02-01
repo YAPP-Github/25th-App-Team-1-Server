@@ -73,7 +73,7 @@ openapi3 {
 				description = "Local Server"
 			},
 			{
-				url = "http://${System.getenv('DEV_SERVER_IP')}"
+				url = "http://dev.orbitalarm.net"
 				description = "Dev Server"
 			}
 	]
