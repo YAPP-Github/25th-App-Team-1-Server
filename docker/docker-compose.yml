@@ -6,37 +6,34 @@ services:
     image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${IMAGE_TAG}
     expose:
       - "8080"
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    deploy:
-      resources:
-        limits:
-          memory: 800M
+    env_file: .env
+    networks:
+      - backend
 
   nginx:
-    depends_on:
-      - app
-    container_name: nginx
     image: nginx:latest
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./nginx/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-      - ./nginx/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    restart: always
+    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - app
+    networks:
+      - backend
 
   certbot:
     image: certbot/certbot
-    container_name: certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: sh -c "certbot certonly --webroot -w /var/www/certbot -d dev.orbitalarm.net --non-interactive --agree-tos --email yappappfirst@gmail.com"
     depends_on:
       - nginx
+    command: certonly --webroot -w /var/www/certbot --keep-until-expiring --non-interactive --agree-tos --email yappappfirst@gmail.com -d dev.orbitalarm.net
+
+networks:
+  backend:
+    driver: bridge
