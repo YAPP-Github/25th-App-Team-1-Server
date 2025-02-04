@@ -2,7 +2,7 @@ name: Dev Deployment
 
 on:
   push:
-    branches: [ develop, YAF-109 ]
+    branches: [ develop ]
     paths:
       - "src/**"
       - "docker/**"
