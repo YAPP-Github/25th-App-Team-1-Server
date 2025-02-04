@@ -3,6 +3,7 @@ package co.yapp.orbit.prereservation.application;
 import co.yapp.orbit.prereservation.application.exception.DuplicatePreReservationException;
 import co.yapp.orbit.prereservation.application.port.in.CreatePreReservationUseCase;
 import co.yapp.orbit.prereservation.application.port.in.PreReservationCommand;
+import co.yapp.orbit.prereservation.application.port.out.NotifyPreReservationPort;
 import co.yapp.orbit.prereservation.application.port.out.SavePreReservationPort;
 import co.yapp.orbit.prereservation.domain.PreReservation;
 import jakarta.transaction.Transactional;
@@ -12,9 +13,14 @@ import org.springframework.stereotype.Service;
 public class PreReservationService implements CreatePreReservationUseCase {
 
     private final SavePreReservationPort savePreReservationPort;
+    private final NotifyPreReservationPort notifyPreReservationPort; // 추가
 
-    public PreReservationService(SavePreReservationPort savePreReservationPort) {
+    public PreReservationService(
+        SavePreReservationPort savePreReservationPort,
+        NotifyPreReservationPort notifyPreReservationPort
+    ) {
         this.savePreReservationPort = savePreReservationPort;
+        this.notifyPreReservationPort = notifyPreReservationPort;
     }
 
     @Transactional
@@ -25,6 +31,8 @@ public class PreReservationService implements CreatePreReservationUseCase {
         }
         PreReservation preReservation = new PreReservation(command.email(), command.phoneNumber());
         savePreReservationPort.save(preReservation);
+
+        notifyPreReservationPort.notify(preReservation);
     }
 
     private boolean checkDuplicate(String email, String phoneNumber) {
