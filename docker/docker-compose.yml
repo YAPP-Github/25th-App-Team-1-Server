@@ -18,6 +18,7 @@ services:
   nginx:
     depends_on:
       - app
+    container_name: nginx
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx/conf.d
@@ -32,9 +33,10 @@ services:
 
   certbot:
     image: certbot/certbot
+    container_name: certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: sh -c "certonly --webroot -w /var/www/certbot -d dev.orbitalarm.net"
+    command: sh -c "certbot certonly --webroot -w /var/www/certbot -d dev.orbitalarm.net --non-interactive --agree-tos --email yappappfirst@gmail.com"
     depends_on:
       - nginx

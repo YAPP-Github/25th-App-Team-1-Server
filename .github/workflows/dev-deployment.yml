@@ -133,7 +133,9 @@ jobs:
             sh ./scripts/docker-install.sh
             sudo docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY_NAME:$IMAGE_TAG
             sudo docker-compose down
-            sudo docker-compose up -d
+            sudo docker-compose up -d app nginx
+            sudo docker-compose run --rm certbot
+            sudo docker-compose restart nginx
 
       - name: Remove Github Actions IP from security group
         run: |
