@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import co.yapp.orbit.prereservation.application.exception.DuplicatePreReservationException;
 import co.yapp.orbit.prereservation.application.port.in.PreReservationCommand;
+import co.yapp.orbit.prereservation.application.port.out.NotifyPreReservationPort;
 import co.yapp.orbit.prereservation.application.port.out.SavePreReservationPort;
 import co.yapp.orbit.prereservation.domain.PreReservation;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,11 +21,13 @@ class PreReservationServiceTest {
 
     private PreReservationService preReservationService;
     private SavePreReservationPort savePreReservationPort;
+    private NotifyPreReservationPort notifyPreReservationPort;
 
     @BeforeEach
     void setUp() {
         savePreReservationPort = Mockito.mock(SavePreReservationPort.class);
-        preReservationService = new PreReservationService(savePreReservationPort);
+        notifyPreReservationPort = Mockito.mock(NotifyPreReservationPort.class);
+        preReservationService = new PreReservationService(savePreReservationPort, notifyPreReservationPort);
     }
 
     @Test
@@ -58,5 +61,21 @@ class PreReservationServiceTest {
         );
 
         verify(savePreReservationPort, never()).save(any(PreReservation.class));
+    }
+
+    @Test
+    @DisplayName("사전예약 요청이 들어오면 알림을 보내야 한다.")
+    void createPreReservation_thenNotify() {
+        // given
+        PreReservationCommand command = new PreReservationCommand("홍길동", "010-1234-5678");
+
+        when(savePreReservationPort.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678"))
+            .thenReturn(false);
+
+        // when
+        preReservationService.createPreReservation(command);
+
+        // then
+        verify(notifyPreReservationPort, times(1)).notify(any(PreReservation.class));
     }
 }

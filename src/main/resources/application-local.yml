@@ -18,3 +18,7 @@ spring:
   h2:
     console:
       enabled: true
+
+discord:
+  webhook:
+    url: {DISCORD_WEBHOOK_URL}
