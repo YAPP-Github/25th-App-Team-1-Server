@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://www.orbitalarm.net/logo.png" width="250" alt="Orbit Logo">
+<img src="images/logo.png" width="250" alt="Orbit Logo">
 
 # Orbit API Server
 
