@@ -12,11 +12,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Slf4j
 public class CreateFortuneService implements CreateFortuneUseCase {
 
     private final GeminiApiPort geminiApiPort;
@@ -30,6 +31,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
     }
 
     @Override
+    @Transactional
     public Fortune createFortune(LoadFortuneCommand command) {
         // TODO: 사용자 정보 프롬프트에 추가
         // User user = loadUserPort.findById(command.userId());
@@ -45,6 +47,8 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
     private Fortune parseStringToFortune(String response) {
         try {
+            response = response.replace("```", "").replace("json", "").trim();
+
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response);
 
@@ -91,6 +95,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
                 luckyOutfitAccessory, unluckyColor, luckyColor, luckyFood);
 
         } catch (JsonProcessingException e) {
+            log.error("JSON 파싱 오류: {}", response, e);
             throw new FortuneParsingException("운세 데이터를 처리하는 과정에서 오류가 발생했습니다.");
         }
     }

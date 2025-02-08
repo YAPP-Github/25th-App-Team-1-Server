@@ -21,7 +21,7 @@ public class FortuneController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createFortune(@RequestParam Long userId) {
+    public ResponseEntity<?> createFortune(@RequestParam("userId") Long userId) {
         LoadFortuneCommand command = new LoadFortuneCommand(userId);
         Fortune fortune = createFortuneUseCase.createFortune(command);
 
