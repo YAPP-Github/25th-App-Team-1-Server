@@ -25,10 +25,18 @@ public class GeminiApiAdapter implements GeminiApiPort {
 
         try {
             String response = callGemini(prompt);
+
+            if (response == null || response.trim().isEmpty()) {
+                throw new FortuneFetchException("운세 데이터를 불러오는 데 실패했습니다.");
+            }
+
             response = response
                 .replaceAll("\\s+", " ")  // 중복된 공백 제거
                 .replaceAll("\\n+", "\n")  // 중복된 개행 제거
-                .replaceAll("\\\\+", "\\\\");  // 중복된 백슬래시 제거
+                .replaceAll("\\\\+", "\\\\")  // 중복된 백슬래시 제거
+                .replaceAll("```", "")
+                .replaceAll("json", "")
+                .trim();
 
             return response;
         } catch (Exception e) {
@@ -36,7 +44,7 @@ public class GeminiApiAdapter implements GeminiApiPort {
         }
     }
 
-    private String callGemini(String prompt) {
+    public String callGemini(String prompt) {
         GeminiApiResponse response = webClient.post()
             .uri(geminiApiUrl)
             .bodyValue(new GeminiApiRequest(prompt))
@@ -48,7 +56,7 @@ public class GeminiApiAdapter implements GeminiApiPort {
     }
 
     // TODO: 사용자 정보(CreateFortuneRequest) 추가
-    private String generatePrompt() {
+    public String generatePrompt() {
         StringBuilder prompt = new StringBuilder();
 
         prompt.append("사용자 정보와 사주오행을 바탕으로 운세를 생성하세요(출력 형식 외의 문장 금지)\n" +

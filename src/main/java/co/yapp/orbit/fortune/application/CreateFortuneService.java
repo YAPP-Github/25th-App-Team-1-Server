@@ -47,8 +47,6 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
     private Fortune parseStringToFortune(String response) {
         try {
-            response = response.replace("```", "").replace("json", "").trim();
-
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response);
 
