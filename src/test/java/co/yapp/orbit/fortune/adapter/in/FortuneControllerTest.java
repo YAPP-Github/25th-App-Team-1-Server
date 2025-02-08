@@ -13,6 +13,7 @@ import co.yapp.orbit.fortune.application.exception.InvalidFortuneCommandExceptio
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneUseCase;
 import co.yapp.orbit.fortune.domain.Fortune;
 import co.yapp.orbit.fortune.domain.FortuneItem;
+import co.yapp.orbit.prereservation.adapter.in.PreReservationController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = FortuneController.class)
+@AutoConfigureWebMvc
 class FortuneControllerTest {
 
     @Autowired
