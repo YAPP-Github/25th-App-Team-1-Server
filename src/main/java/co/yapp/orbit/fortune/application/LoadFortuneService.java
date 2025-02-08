@@ -5,11 +5,11 @@ import co.yapp.orbit.fortune.application.port.out.LoadFortunePort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FortuneService implements LoadFortuneUseCase {
+public class LoadFortuneService implements LoadFortuneUseCase {
 
     private final LoadFortunePort loadFortunePort;
 
-    public FortuneService(LoadFortunePort loadFortunePort) {
+    public LoadFortuneService(LoadFortunePort loadFortunePort) {
         this.loadFortunePort = loadFortunePort;
     }
 }
