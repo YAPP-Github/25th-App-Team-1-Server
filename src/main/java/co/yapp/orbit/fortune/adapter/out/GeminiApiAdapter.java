@@ -12,11 +12,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class GeminiApiAdapter implements GeminiApiPort {
 
     private final WebClient webClient;
-    private final String geminiApiUrl;
+    private final String geminiFullUrl;
 
-    public GeminiApiAdapter(@Value("${gemini.api.url}") String geminiApiUrl) {
+    public GeminiApiAdapter(
+        @Value("${gemini.api.url}") String geminiApiUrl,
+        @Value("${gemini.api.key}") String geminiApiKey
+    ) {
         this.webClient = WebClient.create();
-        this.geminiApiUrl = geminiApiUrl;
+        this.geminiFullUrl = geminiApiUrl + "?key=" + geminiApiKey;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class GeminiApiAdapter implements GeminiApiPort {
 
     public String callGemini(String prompt) {
         GeminiApiResponse response = webClient.post()
-            .uri(geminiApiUrl)
+            .uri(geminiFullUrl)
             .bodyValue(new GeminiApiRequest(prompt))
             .retrieve()
             .bodyToMono(GeminiApiResponse.class)
