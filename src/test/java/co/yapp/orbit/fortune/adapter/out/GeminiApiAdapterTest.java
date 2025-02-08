@@ -14,7 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(properties = {"gemini.api.url=http://gemini-dummy"})
+@SpringBootTest(properties = {
+    "GEMINI_URL=http://gemini-dummy-url.com",
+    "GEMINI_KEY=your-api-key"
+})
 class GeminiApiAdapterTest {
 
     private MockWebServer mockWebServer;
