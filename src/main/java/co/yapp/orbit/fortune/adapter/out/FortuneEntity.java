@@ -5,16 +5,21 @@ import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class FortuneEntity {
 
     @Id
@@ -60,6 +65,10 @@ public class FortuneEntity {
     private String unluckyColor;
     private String luckyColor;
     private String luckyFood;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     @Builder
     public FortuneEntity(String dailyFortune, int avgFortuneScore,
