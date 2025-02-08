@@ -1,8 +1,8 @@
 package co.yapp.orbit.fortune.application;
 
 import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
+import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneUseCase;
-import co.yapp.orbit.fortune.application.port.in.LoadFortuneCommand;
 import co.yapp.orbit.fortune.application.port.out.GeminiApiPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;
 import co.yapp.orbit.fortune.domain.Fortune;
@@ -32,9 +32,9 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
     @Override
     @Transactional
-    public Fortune createFortune(LoadFortuneCommand command) {
+    public Fortune createFortune(CreateFortuneCommand command) {
         // TODO: 사용자 정보 프롬프트에 추가
-        // User user = loadUserPort.findById(command.userId());
+        // User user = loadUserPort.findById(command.getUserId());
         // CreateFortuneRequest request = new CreateFortuneRequest(user.getName(), user.getBirthday(), user.getBirthTime(), user.getGender());
 
         String response = geminiApiPort.loadFortune();
