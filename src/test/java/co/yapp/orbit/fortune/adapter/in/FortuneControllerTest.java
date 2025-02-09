@@ -45,7 +45,6 @@ class FortuneControllerTest {
         Fortune fortune = Fortune.from(
             null,
             "Today is a great day!",
-            85,
             new FortuneItem(90, "Success in studies"),
             new FortuneItem(90, "Prosperity in finance"),
             new FortuneItem(90, "Strong physical health"),
@@ -62,7 +61,6 @@ class FortuneControllerTest {
         Fortune newFortune = Fortune.from(
             1L,
             fortune.getDailyFortune(),
-            fortune.getAvgFortuneScore(),
             fortune.getStudyCareerFortune(),
             fortune.getWealthFortune(),
             fortune.getHealthFortune(),

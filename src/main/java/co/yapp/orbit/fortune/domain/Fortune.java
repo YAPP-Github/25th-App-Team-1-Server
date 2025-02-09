@@ -1,5 +1,6 @@
 package co.yapp.orbit.fortune.domain;
 
+import java.util.Arrays;
 import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,11 +49,17 @@ public class Fortune {
         this.luckyFood = luckyFood;
     }
 
-    public static Fortune from(Long id, String dailyFortune, int avgFortuneScore,
-        FortuneItem studyCareerFortune,
+    public static Fortune from(Long id, String dailyFortune, FortuneItem studyCareerFortune,
         FortuneItem wealthFortune, FortuneItem healthFortune, FortuneItem loveFortune,
         String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
         String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {
+
+        int avgFortuneScore = calcAvgFortuneScore(
+            studyCareerFortune.getScore(),
+            wealthFortune.getScore(),
+            healthFortune.getScore(),
+            loveFortune.getScore()
+        );
 
         return Fortune.builder()
             .id(id)
@@ -70,6 +77,10 @@ public class Fortune {
             .luckyColor(luckyColor)
             .luckyFood(luckyFood)
             .build();
+    }
+
+    private static int calcAvgFortuneScore(int... scores) {
+        return (int) Arrays.stream(scores).average().orElse(0);
     }
 
     @Override

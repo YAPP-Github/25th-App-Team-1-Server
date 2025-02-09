@@ -34,9 +34,9 @@ public class FortuneAiAdapter implements FortuneAiPort {
             }
 
             response = response
-                .replaceAll("\\s+", " ")  // 중복된 공백 제거
-                .replaceAll("\\n+", "\n")  // 중복된 개행 제거
-                .replaceAll("\\\\+", "\\\\")  // 중복된 백슬래시 제거
+                .replaceAll("\\s+", " ")
+                .replaceAll("\\n+", "\n")
+                .replaceAll("\\\\+", "\\\\")
                 .replaceAll("```", "")
                 .replaceAll("json", "")
                 .trim();

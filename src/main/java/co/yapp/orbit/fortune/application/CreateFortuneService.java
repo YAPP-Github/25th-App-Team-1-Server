@@ -45,7 +45,6 @@ public class CreateFortuneService implements CreateFortuneUseCase {
         return Fortune.from(
             fortuneId,
             fortune.getDailyFortune(),
-            fortune.getAvgFortuneScore(),
             fortune.getStudyCareerFortune(),
             fortune.getWealthFortune(),
             fortune.getHealthFortune(),
@@ -86,13 +85,6 @@ public class CreateFortuneService implements CreateFortuneUseCase {
                 fortuneNode.path("love").path("description").asText()
             );
 
-            int avgFortuneScore = calcAvgFortuneScore(
-                studyCareerFortune.getScore(),
-                wealthFortune.getScore(),
-                healthFortune.getScore(),
-                loveFortune.getScore()
-            );
-
             JsonNode luckyOutfitNode = rootNode.path("lucky_outfit");
             String luckyOutfitTop = luckyOutfitNode.path("top").asText();
             String luckyOutfitBottom = luckyOutfitNode.path("bottom").asText();
@@ -103,7 +95,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
             String luckyColor = rootNode.path("lucky_color").asText();
             String luckyFood = rootNode.path("lucky_food").asText();
 
-            return Fortune.from(null, dailyFortune, avgFortuneScore, studyCareerFortune, wealthFortune,
+            return Fortune.from(null, dailyFortune, studyCareerFortune, wealthFortune,
                 healthFortune, loveFortune, luckyOutfitTop, luckyOutfitBottom, luckyOutfitShoes,
                 luckyOutfitAccessory, unluckyColor, luckyColor, luckyFood);
 
@@ -111,9 +103,5 @@ public class CreateFortuneService implements CreateFortuneUseCase {
             log.error("JSON 파싱 오류: {}", response, e);
             throw new FortuneParsingException("운세 데이터를 처리하는 과정에서 오류가 발생했습니다.");
         }
-    }
-
-    private int calcAvgFortuneScore(int... scores) {
-        return (int) Arrays.stream(scores).average().orElse(0);
     }
 }
