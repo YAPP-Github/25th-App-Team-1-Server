@@ -23,12 +23,15 @@ class CreateFortuneServiceTest {
     private CreateFortuneService createFortuneService;
     private FortuneAiPort fortuneAiPort;
     private SaveFortunePort saveFortunePort;
+    private String mockResponse;
 
     @BeforeEach
     void setUp() {
         fortuneAiPort = Mockito.mock(FortuneAiPort.class);
         saveFortunePort = Mockito.mock(SaveFortunePort.class);
         createFortuneService = new CreateFortuneService(fortuneAiPort, saveFortunePort, null);
+
+        mockResponse = "{ \"daily_fortune\": \"Good day!\", \"fortune\": { \"study_career\": {\"score\": 80, \"description\": \"Study well today!\"}, \"wealth\": {\"score\": 75, \"description\": \"A prosperous day!\"}, \"health\": {\"score\": 90, \"description\": \"Great health today!\"}, \"love\": {\"score\": 85, \"description\": \"Love is in the air!\"} }, \"lucky_outfit\": {\"top\": \"Blue\", \"bottom\": \"White\", \"shoes\": \"Black\", \"accessory\": \"Necklace\"}, \"unlucky_color\": \"Red\", \"lucky_color\": \"Green\", \"lucky_food\": \"Pizza\" }";
     }
 
     @Test
@@ -36,7 +39,6 @@ class CreateFortuneServiceTest {
     void createFortune_thenSave() {
         // given
         CreateFortuneCommand command = new CreateFortuneCommand("1");
-        String mockResponse = "{ \"daily_fortune\": \"Good day!\", \"fortune\": { \"study_career\": {\"score\": 80, \"description\": \"Study well today!\"}, \"wealth\": {\"score\": 75, \"description\": \"A prosperous day!\"}, \"health\": {\"score\": 90, \"description\": \"Great health today!\"}, \"love\": {\"score\": 85, \"description\": \"Love is in the air!\"} }, \"lucky_outfit\": {\"top\": \"Blue\", \"bottom\": \"White\", \"shoes\": \"Black\", \"accessory\": \"Necklace\"}, \"unlucky_color\": \"Red\", \"lucky_color\": \"Green\", \"lucky_food\": \"Pizza\" }";
 
         when(fortuneAiPort.loadFortune()).thenReturn(mockResponse);
         when(saveFortunePort.save(any(Fortune.class))).thenReturn(1L);
@@ -56,9 +58,9 @@ class CreateFortuneServiceTest {
     void createFortune_whenParseError_thenThrowException() {
         // given
         CreateFortuneCommand command = new CreateFortuneCommand("1");
-        String mockResponse = "{ invalid json }";
+        String invalidResponse = "{ invalid json }";
 
-        when(fortuneAiPort.loadFortune()).thenReturn(mockResponse);
+        when(fortuneAiPort.loadFortune()).thenReturn(invalidResponse);
 
         // when & then
         assertThrows(FortuneParsingException.class, () -> createFortuneService.createFortune(command));
