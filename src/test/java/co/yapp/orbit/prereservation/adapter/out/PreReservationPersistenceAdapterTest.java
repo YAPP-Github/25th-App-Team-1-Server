@@ -57,13 +57,13 @@ class PreReservationPersistenceAdapterTest {
     @DisplayName("PreReservation 도메인 객체를 DB에 정상적으로 저장")
     void save() {
         // given
-        PreReservation domain = new PreReservation("홍길동", "010-1234-5678");
+        PreReservation domain = new PreReservation("byungwook-min@naver.com", "010-1234-5678");
 
         // when
         preReservationPersistenceAdapter.save(domain);
 
         // then
-        boolean exists = preReservationRepository.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678");
+        boolean exists = preReservationRepository.existsByEmailAndPhoneNumber("byungwook-min@naver.com", "010-1234-5678");
         assertThat(exists).isTrue();
     }
 }
