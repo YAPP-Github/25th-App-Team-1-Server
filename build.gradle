@@ -50,6 +50,9 @@ dependencies {
 	// Swagger
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.4'
+
+	// Health Check
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('build') {

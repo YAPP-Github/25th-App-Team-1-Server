@@ -2,7 +2,7 @@ name: Dev Deployment
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, YAF-108 ]
     paths:
       - "src/**"
       - "docker/**"
@@ -97,7 +97,7 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
-          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/default.conf,docker/nginx/Dockerfile-nginx"
+          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/conf.d"
           target: 'compose'
           rm: true
 
@@ -121,6 +121,8 @@ jobs:
           envs: SPRING_DATABASE_SCHEMA,SPRING_DATABASE_USERNAME,SPRING_DATABASE_PASSWORD,SPRING_DATABASE_HOST,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_REPOSITORY_NAME,GEMINI_URL,GEMINI_KEY
           script: |
             cd compose/docker/
+            sudo curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > nginx/options-ssl-nginx.conf
+            sudo openssl dhparam -out nginx/ssl-dhparams.pem 2048
             sudo touch .env
             sudo echo "
             SPRING_DATABASE_SCHEMA=$SPRING_DATABASE_SCHEMA
@@ -135,7 +137,9 @@ jobs:
             sh ./scripts/docker-install.sh
             sudo docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY_NAME:$IMAGE_TAG
             sudo docker-compose down
-            sudo docker-compose up -d
+            sudo docker-compose up -d app nginx
+            sudo docker-compose run --rm certbot
+            sudo docker-compose restart nginx
 
       - name: Remove Github Actions IP from security group
         run: |
