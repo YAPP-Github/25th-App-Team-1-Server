@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GeminiApiRequest {
+public class FortuneAiRequest {
 
     private List<Content> contents;
 
@@ -21,7 +21,7 @@ public class GeminiApiRequest {
         private String text;
     }
 
-    public GeminiApiRequest(String prompt) {
+    public FortuneAiRequest(String prompt) {
         this.contents = new ArrayList<>();
         Content content = new Content();
 

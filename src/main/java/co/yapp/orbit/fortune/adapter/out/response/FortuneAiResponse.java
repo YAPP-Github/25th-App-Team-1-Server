@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeminiApiResponse {
+public class FortuneAiResponse {
 
     private List<Candidate> candidates;
     private UsageMetadata usageMetadata;

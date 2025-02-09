@@ -6,19 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import co.yapp.orbit.fortune.adapter.out.exception.FortuneFetchException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-class GeminiApiAdapterTest {
+class FortuneAiAdapterTest {
 
     private MockWebServer mockWebServer;
 
-    private GeminiApiAdapter geminiApiAdapter;
+    private FortuneAiAdapter fortuneAiAdapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -26,7 +23,7 @@ class GeminiApiAdapterTest {
         mockWebServer.start();
 
         String mockUrl = mockWebServer.url("/").toString();
-        geminiApiAdapter = new GeminiApiAdapter(mockUrl, "my-api-key");
+        fortuneAiAdapter = new FortuneAiAdapter(mockUrl, "my-api-key");
     }
 
     @AfterEach
@@ -45,7 +42,7 @@ class GeminiApiAdapterTest {
             .addHeader("Content-Type", "application/json"));
 
         // when
-        String response = geminiApiAdapter.loadFortune();
+        String response = fortuneAiAdapter.loadFortune();
 
         // then
         assertThat(response).isNotNull();
@@ -62,7 +59,7 @@ class GeminiApiAdapterTest {
             .addHeader("Content-Type", "application/json"));
 
         // when & then
-        assertThrows(FortuneFetchException.class, () -> geminiApiAdapter.loadFortune());
+        assertThrows(FortuneFetchException.class, () -> fortuneAiAdapter.loadFortune());
     }
 
     @Test
@@ -72,6 +69,6 @@ class GeminiApiAdapterTest {
         mockWebServer.enqueue(new MockResponse().setResponseCode(500));
 
         // when & then
-        assertThrows(FortuneFetchException.class, () -> geminiApiAdapter.loadFortune());
+        assertThrows(FortuneFetchException.class, () -> fortuneAiAdapter.loadFortune());
     }
 }

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 
 import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
-import co.yapp.orbit.fortune.application.port.out.GeminiApiPort;
+import co.yapp.orbit.fortune.application.port.out.FortuneAiPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;
 import co.yapp.orbit.fortune.domain.Fortune;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,14 +21,14 @@ import org.mockito.Mockito;
 class CreateFortuneServiceTest {
 
     private CreateFortuneService createFortuneService;
-    private GeminiApiPort geminiApiPort;
+    private FortuneAiPort fortuneAiPort;
     private SaveFortunePort saveFortunePort;
 
     @BeforeEach
     void setUp() {
-        geminiApiPort = Mockito.mock(GeminiApiPort.class);
+        fortuneAiPort = Mockito.mock(FortuneAiPort.class);
         saveFortunePort = Mockito.mock(SaveFortunePort.class);
-        createFortuneService = new CreateFortuneService(geminiApiPort, saveFortunePort, null);
+        createFortuneService = new CreateFortuneService(fortuneAiPort, saveFortunePort, null);
     }
 
     @Test
@@ -38,14 +38,14 @@ class CreateFortuneServiceTest {
         CreateFortuneCommand command = new CreateFortuneCommand("1");
         String mockResponse = "{ \"daily_fortune\": \"Good day!\", \"fortune\": { \"study_career\": {\"score\": 80, \"description\": \"Study well today!\"}, \"wealth\": {\"score\": 75, \"description\": \"A prosperous day!\"}, \"health\": {\"score\": 90, \"description\": \"Great health today!\"}, \"love\": {\"score\": 85, \"description\": \"Love is in the air!\"} }, \"lucky_outfit\": {\"top\": \"Blue\", \"bottom\": \"White\", \"shoes\": \"Black\", \"accessory\": \"Necklace\"}, \"unlucky_color\": \"Red\", \"lucky_color\": \"Green\", \"lucky_food\": \"Pizza\" }";
 
-        when(geminiApiPort.loadFortune()).thenReturn(mockResponse);
+        when(fortuneAiPort.loadFortune()).thenReturn(mockResponse);
         when(saveFortunePort.save(any(Fortune.class))).thenReturn(1L);
 
         // when
         Fortune fortune = createFortuneService.createFortune(command);
 
         // then
-        verify(geminiApiPort, times(1)).loadFortune();
+        verify(fortuneAiPort, times(1)).loadFortune();
         verify(saveFortunePort, times(1)).save(any(Fortune.class));
 
         assertThat(fortune.getId()).isEqualTo(1L);
@@ -58,7 +58,7 @@ class CreateFortuneServiceTest {
         CreateFortuneCommand command = new CreateFortuneCommand("1");
         String mockResponse = "{ invalid json }";
 
-        when(geminiApiPort.loadFortune()).thenReturn(mockResponse);
+        when(fortuneAiPort.loadFortune()).thenReturn(mockResponse);
 
         // when & then
         assertThrows(FortuneParsingException.class, () -> createFortuneService.createFortune(command));

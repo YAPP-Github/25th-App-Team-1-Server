@@ -3,7 +3,7 @@ package co.yapp.orbit.fortune.application;
 import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneUseCase;
-import co.yapp.orbit.fortune.application.port.out.GeminiApiPort;
+import co.yapp.orbit.fortune.application.port.out.FortuneAiPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;
 import co.yapp.orbit.fortune.domain.Fortune;
 import co.yapp.orbit.fortune.domain.FortuneItem;
@@ -20,12 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class CreateFortuneService implements CreateFortuneUseCase {
 
-    private final GeminiApiPort geminiApiPort;
+    private final FortuneAiPort fortuneAiPort;
     private final SaveFortunePort saveFortunePort;
     private final LoadUserPort loadUserPort;
 
-    public CreateFortuneService(GeminiApiPort geminiApiPort, SaveFortunePort saveFortunePort, LoadUserPort loadUserPort) {
-        this.geminiApiPort = geminiApiPort;
+    public CreateFortuneService(FortuneAiPort fortuneAiPort, SaveFortunePort saveFortunePort, LoadUserPort loadUserPort) {
+        this.fortuneAiPort = fortuneAiPort;
         this.saveFortunePort = saveFortunePort;
         this.loadUserPort = loadUserPort;
     }
@@ -37,7 +37,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
         // User user = loadUserPort.findById(command.getUserId());
         // CreateFortuneRequest request = new CreateFortuneRequest(user.getName(), user.getBirthday(), user.getBirthTime(), user.getGender());
 
-        String response = geminiApiPort.loadFortune();
+        String response = fortuneAiPort.loadFortune();
         Fortune fortune = parseStringToFortune(response);
 
         Long fortuneId = saveFortunePort.save(fortune);
