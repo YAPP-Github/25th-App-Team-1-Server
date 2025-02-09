@@ -78,7 +78,7 @@ openapi3 {
 				description = "Local Server"
 			},
 			{
-				url = "http://dev.orbitalarm.net"
+				url = "https://dev.orbitalarm.net"
 				description = "Dev Server"
 			}
 	]
