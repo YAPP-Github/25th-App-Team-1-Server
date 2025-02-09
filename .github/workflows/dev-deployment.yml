@@ -97,7 +97,7 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SSH_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
-          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/conf.d"
+          source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/conf.d/default.conf"
           target: 'compose'
           rm: true
 
@@ -111,6 +111,7 @@ jobs:
           IMAGE_TAG: ${{ needs.build-and-docker-operations.outputs.image_tag }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_REPOSITORY_NAME: ${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}
+          DISCORD_WEBHOOK_URL: ${{ DISCORD_WEBHOOK_URL }}
         with:
           host: ${{ secrets.DEV_SERVER_IP }}
           username: ${{ secrets.DEV_SERVER_USERNAME }}
@@ -129,7 +130,8 @@ jobs:
             SPRING_DATABASE_HOST=$SPRING_DATABASE_HOST
             IMAGE_TAG=$IMAGE_TAG
             DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME
-            DOCKERHUB_REPOSITORY_NAME=$DOCKERHUB_REPOSITORY_NAME"| sudo tee .env
+            DOCKERHUB_REPOSITORY_NAME=$DOCKERHUB_REPOSITORY_NAME
+            DISCORD_WEBHOOK_URL=$DISCORD_WEBHOOK_URL"| sudo tee .env
             sh ./scripts/docker-install.sh
             sudo docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY_NAME:$IMAGE_TAG
             sudo docker-compose down
