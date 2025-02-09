@@ -6,22 +6,34 @@ services:
     image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${IMAGE_TAG}
     expose:
       - "8080"
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    deploy:
-      resources:
-        limits:
-          memory: 800M
+    env_file: .env
+    networks:
+      - backend
 
   nginx:
-    depends_on:
-      - app
+    image: nginx:latest
     container_name: nginx
-    restart: always
-    build:
-      dockerfile: Dockerfile-nginx
-      context: ./nginx
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - app
+    networks:
+      - backend
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+    command: certonly --webroot -w /var/www/certbot --keep-until-expiring --non-interactive --agree-tos --email yappappfirst@gmail.com -d dev.orbitalarm.net
+
+networks:
+  backend:
+    driver: bridge
