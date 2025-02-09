@@ -99,7 +99,7 @@ jobs:
           port: ${{ secrets.DEV_SSH_PORT }}
           source: "docker/docker-compose.yml,docker/scripts/docker-install.sh,docker/nginx/conf.d/default.conf"
           target: 'compose'
-          rm: true
+          rm: false
 
       - name: SSH remote and Run Docker Compose
         uses: appleboy/ssh-action@master
