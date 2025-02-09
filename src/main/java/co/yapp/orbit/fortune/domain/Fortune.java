@@ -48,34 +48,14 @@ public class Fortune {
         this.luckyFood = luckyFood;
     }
 
-    public static Fortune of(Long id, Fortune fortune) {
-
-        return Fortune.builder()
-            .id(id)
-            .dailyFortune(fortune.getDailyFortune())
-            .avgFortuneScore(fortune.getAvgFortuneScore())
-            .studyCareerFortune(fortune.getStudyCareerFortune())
-            .wealthFortune(fortune.getWealthFortune())
-            .healthFortune(fortune.getHealthFortune())
-            .loveFortune(fortune.getLoveFortune())
-            .luckyOutfitTop(fortune.getLuckyOutfitTop())
-            .luckyOutfitBottom(fortune.getLuckyOutfitBottom())
-            .luckyOutfitShoes(fortune.getLuckyOutfitShoes())
-            .luckyOutfitAccessory(fortune.getLuckyOutfitAccessory())
-            .unluckyColor(fortune.getUnluckyColor())
-            .luckyColor(fortune.getLuckyColor())
-            .luckyFood(fortune.getLuckyFood())
-            .build();
-    }
-
-    public static Fortune of(String dailyFortune, int avgFortuneScore,
+    public static Fortune from(Long id, String dailyFortune, int avgFortuneScore,
         FortuneItem studyCareerFortune,
         FortuneItem wealthFortune, FortuneItem healthFortune, FortuneItem loveFortune,
         String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
         String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {
 
         return Fortune.builder()
-            .id(null)
+            .id(id)
             .dailyFortune(dailyFortune)
             .avgFortuneScore(avgFortuneScore)
             .studyCareerFortune(studyCareerFortune)

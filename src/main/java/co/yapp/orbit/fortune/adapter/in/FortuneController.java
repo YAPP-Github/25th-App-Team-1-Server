@@ -25,7 +25,7 @@ public class FortuneController {
         CreateFortuneCommand command = new CreateFortuneCommand(userId);
         Fortune fortune = createFortuneUseCase.createFortune(command);
 
-        LoadFortuneResponse response = LoadFortuneResponse.of(fortune);
+        LoadFortuneResponse response = LoadFortuneResponse.from(fortune);
 
         return ResponseEntity.ok().body(response);
     }

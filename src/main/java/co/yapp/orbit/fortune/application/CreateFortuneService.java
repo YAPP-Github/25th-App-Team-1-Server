@@ -42,7 +42,22 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
         Long fortuneId = saveFortunePort.save(fortune);
 
-        return Fortune.of(fortuneId, fortune);
+        return Fortune.from(
+            fortuneId,
+            fortune.getDailyFortune(),
+            fortune.getAvgFortuneScore(),
+            fortune.getStudyCareerFortune(),
+            fortune.getWealthFortune(),
+            fortune.getHealthFortune(),
+            fortune.getLoveFortune(),
+            fortune.getLuckyOutfitTop(),
+            fortune.getLuckyOutfitBottom(),
+            fortune.getLuckyOutfitShoes(),
+            fortune.getLuckyOutfitAccessory(),
+            fortune.getUnluckyColor(),
+            fortune.getLuckyColor(),
+            fortune.getLuckyFood()
+        );
     }
 
     private Fortune parseStringToFortune(String response) {
@@ -88,7 +103,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
             String luckyColor = rootNode.path("lucky_color").asText();
             String luckyFood = rootNode.path("lucky_food").asText();
 
-            return Fortune.of(dailyFortune, avgFortuneScore, studyCareerFortune, wealthFortune,
+            return Fortune.from(null, dailyFortune, avgFortuneScore, studyCareerFortune, wealthFortune,
                 healthFortune, loveFortune, luckyOutfitTop, luckyOutfitBottom, luckyOutfitShoes,
                 luckyOutfitAccessory, unluckyColor, luckyColor, luckyFood);
 

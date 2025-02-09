@@ -27,7 +27,7 @@ public class FortuneAiAdapter implements FortuneAiPort {
         String prompt = generatePrompt();
 
         try {
-            String response = callGemini(prompt);
+            String response = callAi(prompt);
 
             if (response == null || response.trim().isEmpty()) {
                 throw new FortuneFetchException("운세 데이터를 불러오는 데 실패했습니다.");
@@ -47,7 +47,7 @@ public class FortuneAiAdapter implements FortuneAiPort {
         }
     }
 
-    public String callGemini(String prompt) {
+    public String callAi(String prompt) {
         FortuneAiResponse response = webClient.post()
             .uri(geminiFullUrl)
             .bodyValue(new FortuneAiRequest(prompt))

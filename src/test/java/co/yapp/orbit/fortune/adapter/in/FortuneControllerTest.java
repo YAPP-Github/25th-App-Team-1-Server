@@ -42,7 +42,8 @@ class FortuneControllerTest {
     @DisplayName("운세 생성에 성공 시, 200 OK 응답 반환")
     void createFortune_ok() throws Exception {
         // given
-        Fortune fortune = Fortune.of(
+        Fortune fortune = Fortune.from(
+            null,
             "Today is a great day!",
             85,
             new FortuneItem(90, "Success in studies"),
@@ -58,8 +59,24 @@ class FortuneControllerTest {
             "Pizza"
         );
 
-        Fortune newFortune = Fortune.of(1L, fortune);
-        LoadFortuneResponse response = LoadFortuneResponse.of(newFortune);
+        Fortune newFortune = Fortune.from(
+            1L,
+            fortune.getDailyFortune(),
+            fortune.getAvgFortuneScore(),
+            fortune.getStudyCareerFortune(),
+            fortune.getWealthFortune(),
+            fortune.getHealthFortune(),
+            fortune.getLoveFortune(),
+            fortune.getLuckyOutfitTop(),
+            fortune.getLuckyOutfitBottom(),
+            fortune.getLuckyOutfitShoes(),
+            fortune.getLuckyOutfitAccessory(),
+            fortune.getUnluckyColor(),
+            fortune.getLuckyColor(),
+            fortune.getLuckyFood()
+        );
+
+        LoadFortuneResponse response = LoadFortuneResponse.from(newFortune);
         when(createFortuneUseCase.createFortune(any())).thenReturn(newFortune);
 
         // when & then

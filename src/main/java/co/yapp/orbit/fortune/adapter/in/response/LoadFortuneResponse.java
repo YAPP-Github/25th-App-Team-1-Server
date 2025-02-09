@@ -48,7 +48,7 @@ public class LoadFortuneResponse {
         this.luckyFood = luckyFood;
     }
 
-    public static LoadFortuneResponse of(Fortune fortune) {
+    public static LoadFortuneResponse from(Fortune fortune) {
 
         return LoadFortuneResponse.builder()
             .id(fortune.getId())
