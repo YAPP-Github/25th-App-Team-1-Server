@@ -124,7 +124,8 @@ jacocoTestReport {
 					'**/*Application*',
 					'**/*Controller*',
 					'**/config/*',
-					'**/dto/*',
+					'**/request/*',
+					'**/response/*',
 					'**/exception/*',
 			])
 		}))
@@ -156,7 +157,8 @@ jacocoTestCoverageVerification {
 					'**.*Application*',
 					'**.*Controller*',
 					'**.config.*',
-					'**.dto.*',
+					'**.request.*',
+					'**.response.*',
 					'**.exception.*',
 			]
 		}
