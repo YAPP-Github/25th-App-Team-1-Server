@@ -15,10 +15,11 @@ class UserTest {
         String name = "홍길동";
         LocalDate birthDate = LocalDate.parse("2025-02-09");
         LocalTime birthTime = LocalTime.parse("08:30:00");
+        CalendarType calendarType = CalendarType.SOLAR;
         Gender gender = Gender.MALE;
 
-        User user1 = new User(id, name, birthDate, birthTime, gender);
-        User user2 = new User(id, name, birthDate, birthTime, gender);
+        User user1 = new User(id, name, birthDate, birthTime, calendarType, gender);
+        User user2 = new User(id, name, birthDate, birthTime, calendarType, gender);
 
         assertThat(user1)
             .isEqualTo(user2)
@@ -32,9 +33,10 @@ class UserTest {
         LocalDate birthDate = LocalDate.parse("2025-02-09");
         LocalTime birthTime = LocalTime.parse("08:30:00");
         Gender gender = Gender.MALE;
+        CalendarType calendarType = CalendarType.SOLAR;
 
-        User user1 = new User(1L, name, birthDate, birthTime, gender);
-        User user2 = new User(2L, name, birthDate, birthTime, gender);
+        User user1 = new User(1L, name, birthDate, birthTime, calendarType, gender);
+        User user2 = new User(2L, name, birthDate, birthTime, calendarType, gender);
 
         assertThat(user1).isNotEqualTo(user2);
     }
@@ -45,10 +47,11 @@ class UserTest {
         Long id = 1L;
         LocalDate birthDate = LocalDate.parse("2025-02-09");
         LocalTime birthTime = LocalTime.parse("08:30:00");
+        CalendarType calendarType = CalendarType.SOLAR;
         Gender gender = Gender.MALE;
 
-        User user1 = new User(id, "홍길동", birthDate, birthTime, gender);
-        User user2 = new User(id, "김철수", birthDate, birthTime, gender);
+        User user1 = new User(id, "홍길동", birthDate, birthTime, calendarType, gender);
+        User user2 = new User(id, "김철수", birthDate, birthTime, calendarType, gender);
 
         assertThat(user1).isNotEqualTo(user2);
     }
@@ -61,10 +64,11 @@ class UserTest {
         LocalDate birthDate1 = LocalDate.parse("2025-02-09");
         LocalDate birthDate2 = LocalDate.parse("2024-01-01");
         LocalTime birthTime = LocalTime.parse("08:30:00");
+        CalendarType calendarType = CalendarType.SOLAR;
         Gender gender = Gender.MALE;
 
-        User user1 = new User(id, name, birthDate1, birthTime, gender);
-        User user2 = new User(id, name, birthDate2, birthTime, gender);
+        User user1 = new User(id, name, birthDate1, birthTime, calendarType, gender);
+        User user2 = new User(id, name, birthDate2, birthTime, calendarType, gender);
 
         assertThat(user1).isNotEqualTo(user2);
     }
@@ -77,10 +81,11 @@ class UserTest {
         LocalDate birthDate = LocalDate.parse("2025-02-09");
         LocalTime birthTime1 = LocalTime.parse("08:30:00");
         LocalTime birthTime2 = LocalTime.parse("09:00:00");
+        CalendarType calendarType = CalendarType.SOLAR;
         Gender gender = Gender.MALE;
 
-        User user1 = new User(id, name, birthDate, birthTime1, gender);
-        User user2 = new User(id, name, birthDate, birthTime2, gender);
+        User user1 = new User(id, name, birthDate, birthTime1, calendarType, gender);
+        User user2 = new User(id, name, birthDate, birthTime2, calendarType, gender);
 
         assertThat(user1).isNotEqualTo(user2);
     }
@@ -92,9 +97,10 @@ class UserTest {
         String name = "홍길동";
         LocalDate birthDate = LocalDate.parse("2025-02-09");
         LocalTime birthTime = LocalTime.parse("08:30:00");
+        CalendarType calendarType = CalendarType.SOLAR;
 
-        User user1 = new User(id, name, birthDate, birthTime, Gender.MALE);
-        User user2 = new User(id, name, birthDate, birthTime, Gender.FEMALE);
+        User user1 = new User(id, name, birthDate, birthTime, calendarType, Gender.MALE);
+        User user2 = new User(id, name, birthDate, birthTime, calendarType, Gender.FEMALE);
 
         assertThat(user1).isNotEqualTo(user2);
     }
@@ -102,14 +108,14 @@ class UserTest {
     @Test
     @DisplayName("자기 자신과의 equals()는 true를 반환해야 한다.")
     void equals_itself_returnsTrue() {
-        User user = new User(1L, "홍길동", LocalDate.parse("2025-02-09"), LocalTime.parse("08:30:00"), Gender.MALE);
+        User user = new User(1L, "홍길동", LocalDate.parse("2025-02-09"), LocalTime.parse("08:30:00"), CalendarType.SOLAR, Gender.MALE);
         assertThat(user).isEqualTo(user);
     }
 
     @Test
     @DisplayName("다른 타입의 객체와 equals() 비교 시 false를 반환해야 한다.")
     void equals_differentType_returnsFalse() {
-        User user = new User(1L, "홍길동", LocalDate.parse("2025-02-09"), LocalTime.parse("08:30:00"), Gender.MALE);
+        User user = new User(1L, "홍길동", LocalDate.parse("2025-02-09"), LocalTime.parse("08:30:00"), CalendarType.SOLAR, Gender.MALE);
         String other = "some string";
         assertThat(user).isNotEqualTo(other);
     }

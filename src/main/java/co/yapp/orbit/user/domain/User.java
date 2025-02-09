@@ -12,13 +12,15 @@ public class User {
     private final String name;
     private final LocalDate birthDate;
     private final LocalTime birthTime;
+    private final CalendarType calendarType;
     private final Gender gender;
 
-    public User(Long id, String name, LocalDate birthDate, LocalTime birthTime, Gender gender) {
+    public User(Long id, String name, LocalDate birthDate, LocalTime birthTime, CalendarType calendarType, Gender gender) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.birthTime = birthTime;
+        this.calendarType = calendarType;
         this.gender = gender;
     }
 

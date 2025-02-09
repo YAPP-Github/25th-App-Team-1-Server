@@ -21,6 +21,7 @@ public class UserPersistenceAdapter implements SaveUserPort, LoadUserPort {
             user.getName(),
             user.getBirthDate(),
             user.getBirthTime(),
+            user.getCalendarType(),
             user.getGender()
         );
         UserEntity savedEntity = userRepository.save(entity);
@@ -35,6 +36,7 @@ public class UserPersistenceAdapter implements SaveUserPort, LoadUserPort {
                 entity.getName(),
                 entity.getBirthDate(),
                 entity.getBirthTime(),
+                entity.getCalendarType(),
                 entity.getGender()
             ));
     }

@@ -3,6 +3,7 @@ package co.yapp.orbit.user.application;
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
 import co.yapp.orbit.user.application.port.in.UserCommand;
 import co.yapp.orbit.user.application.port.out.SaveUserPort;
+import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
 import java.time.LocalDate;
@@ -25,7 +26,8 @@ public class SaveUserService implements SaveUserUseCase {
         LocalDate birthDate = LocalDate.parse(command.birthDate());
         LocalTime birthTime = LocalTime.parse(command.birthTime());
         Gender gender = Gender.valueOf(command.gender().toUpperCase());
-        User user = new User(null, command.name(), birthDate, birthTime, gender);
+        CalendarType calendarType = CalendarType.valueOf(command.calendarType().toUpperCase());
+        User user = new User(null, command.name(), birthDate, birthTime, calendarType, gender);
         return saveUserPort.save(user);
     }
 }

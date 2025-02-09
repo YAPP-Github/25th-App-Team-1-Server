@@ -27,6 +27,7 @@ public class UserController {
             request.getName(),
             request.getBirthDate(),
             request.getBirthTime(),
+            request.getCalendarType(),
             request.getGender()
         );
         Long userId = createUserUseCase.saveUser(command);
@@ -41,6 +42,7 @@ public class UserController {
             user.getName(),
             user.getBirthDate().toString(),
             user.getBirthTime().toString(),
+            user.getCalendarType().toString(),
             user.getGender().name()
         );
         return ResponseEntity.ok(response);

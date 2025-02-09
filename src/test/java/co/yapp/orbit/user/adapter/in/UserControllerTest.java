@@ -12,6 +12,7 @@ import co.yapp.orbit.user.application.exception.UserNotFoundException;
 import co.yapp.orbit.user.application.port.in.LoadUserUseCase;
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
 import co.yapp.orbit.user.application.port.in.UserCommand;
+import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,7 +50,8 @@ class UserControllerTest {
         Mockito.when(saveUserUseCase.saveUser(any(UserCommand.class)))
             .thenReturn(userId);
 
-        SaveUserRequest request = new SaveUserRequest("홍길동", "2025-02-09", "08:30:00", "MALE");
+        SaveUserRequest request = new SaveUserRequest("홍길동", "2025-02-09", "08:30:00", "SOLAR",
+            "MALE");
         String json = objectMapper.writeValueAsString(request);
 
         // when & then
@@ -63,7 +65,7 @@ class UserControllerTest {
     @Test
     @DisplayName("사용자 등록 시 이름이 null이면 400 Bad Request를 반환한다.")
     void saveUser_nullName_returnsBadRequest() throws Exception {
-        SaveUserRequest request = new SaveUserRequest(null, "2025-02-09", "08:30:00", "MALE");
+        SaveUserRequest request = new SaveUserRequest(null, "2025-02-09", "08:30:00", "SOLAR", "MALE");
         String json = objectMapper.writeValueAsString(request);
 
         mockMvc.perform(post("/api/v1/users")
@@ -75,7 +77,7 @@ class UserControllerTest {
     @Test
     @DisplayName("사용자 등록 시 생년월일이 빈 문자열이면 400 Bad Request를 반환한다.")
     void saveUser_emptyBirthDate_returnsBadRequest() throws Exception {
-        SaveUserRequest request = new SaveUserRequest("홍길동", "", "08:30:00", "MALE");
+        SaveUserRequest request = new SaveUserRequest("홍길동", "", "08:30:00", "SOLAR", "MALE");
         String json = objectMapper.writeValueAsString(request);
 
         mockMvc.perform(post("/api/v1/users")
@@ -87,7 +89,7 @@ class UserControllerTest {
     @Test
     @DisplayName("사용자 등록 시 유효하지 않은 성별이면 내부에서 예외가 발생하여 500 Internal Server Error를 반환한다.")
     void createUser_invalidGender_returnsInternalServerError() throws Exception {
-        SaveUserRequest request = new SaveUserRequest("홍길동", "2025-02-09", "08:30:00", "INVALID");
+        SaveUserRequest request = new SaveUserRequest("홍길동", "2025-02-09", "08:30:00", "SOLAR", "INVALID");
         String json = objectMapper.writeValueAsString(request);
 
         Mockito.doThrow(new IllegalArgumentException("No enum constant"))
@@ -119,6 +121,7 @@ class UserControllerTest {
             "홍길동",
             java.time.LocalDate.parse("2025-02-09"),
             java.time.LocalTime.parse("08:30:00"),
+            CalendarType.SOLAR,
             Gender.MALE
         );
         Mockito.when(getUserUseCase.loadUser(userId)).thenReturn(user);

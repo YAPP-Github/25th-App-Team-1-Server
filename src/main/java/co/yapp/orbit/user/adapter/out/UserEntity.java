@@ -1,6 +1,7 @@
 package co.yapp.orbit.user.adapter.out;
 
 import co.yapp.orbit.global.domain.BaseTimeEntity;
+import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,15 +30,19 @@ public class UserEntity extends BaseTimeEntity {
     private LocalTime birthTime;
 
     @Enumerated(EnumType.STRING)
+    private CalendarType calendarType;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     protected UserEntity() {
     }
 
-    public UserEntity(String name, LocalDate birthDate, LocalTime birthTime, Gender gender) {
+    public UserEntity(String name, LocalDate birthDate, LocalTime birthTime, CalendarType calendarType, Gender gender) {
         this.name = name;
         this.birthDate = birthDate;
         this.birthTime = birthTime;
+        this.calendarType = calendarType;
         this.gender = gender;
     }
 }

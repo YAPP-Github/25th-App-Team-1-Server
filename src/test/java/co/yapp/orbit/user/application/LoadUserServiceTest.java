@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import co.yapp.orbit.user.application.exception.UserNotFoundException;
 import co.yapp.orbit.user.application.port.out.LoadUserPort;
+import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ class LoadUserServiceTest {
             "홍길동",
             LocalDate.parse("2025-02-09"),
             LocalTime.parse("08:30:00"),
+            CalendarType.SOLAR,
             Gender.MALE
         );
         when(loadUserPort.findById(userId)).thenReturn(Optional.of(user));
