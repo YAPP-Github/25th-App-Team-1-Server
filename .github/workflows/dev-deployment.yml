@@ -111,7 +111,7 @@ jobs:
           IMAGE_TAG: ${{ needs.build-and-docker-operations.outputs.image_tag }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_REPOSITORY_NAME: ${{ secrets.DEV_DOCKERHUB_REPOSITORY_NAME }}
-          DISCORD_WEBHOOK_URL: ${{ DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         with:
           host: ${{ secrets.DEV_SERVER_IP }}
           username: ${{ secrets.DEV_SERVER_USERNAME }}
