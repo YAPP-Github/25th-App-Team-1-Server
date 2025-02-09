@@ -1,5 +1,6 @@
 package co.yapp.orbit.user.adapter.out;
 
+import co.yapp.orbit.global.domain.BaseTimeEntity;
 import co.yapp.orbit.user.domain.Gender;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,8 +15,8 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "`user`")
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
