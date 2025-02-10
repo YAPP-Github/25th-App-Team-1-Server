@@ -7,14 +7,15 @@ import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.TimeZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(properties = {"discord.webhook.url=http://dummy-url.com"})
+@ActiveProfiles("test")
+@SpringBootTest
 class UserPersistenceAdapterTest {
 
     @Autowired

@@ -2,8 +2,10 @@ package co.yapp.orbit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(properties = {"discord.webhook.url=http://dummy-url.com"})
+@ActiveProfiles("test")
+@SpringBootTest
 class OrbitApplicationTests {
 
 	@Test
