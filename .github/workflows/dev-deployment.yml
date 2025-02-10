@@ -2,7 +2,7 @@ name: Dev Deployment
 
 on:
   push:
-    branches: [ develop, YAF-108 ]
+    branches: [ develop ]
     paths:
       - "src/**"
       - "docker/**"
@@ -46,6 +46,10 @@ jobs:
         shell: bash
 
       - name: Build with Gradle and Run Tests
+        env:
+          GEMINI_URL: ${{ secrets.GEMINI_URL }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: ./gradlew clean build
 
       - name: Generate Unique Tag
