@@ -5,6 +5,7 @@ plugins {
 	id 'jacoco'
 	id 'org.sonarqube' version '6.0.1.5171'
 	id 'com.epages.restdocs-api-spec' version '0.19.4'
+	id 'org.hidetake.swagger.generator' version '2.18.2'
 }
 
 group = 'co.yapp.orbit'
@@ -47,8 +48,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.4'
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.4'
 
 	// Health Check
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -66,10 +68,10 @@ tasks.named('test') {
 tasks.register("copyOasToSwagger", Copy) {
 	dependsOn 'openapi3'
 	doFirst {
-		delete('src/main/resources/static/swagger-ui/openapi3.json')
+		delete('src/main/resources/static/docs/openapi3.json')
 	}
 	from(layout.buildDirectory.file("api-spec/openapi3.json"))
-	into('src/main/resources/static/swagger-ui/')
+	into('src/main/resources/static/docs/')
 }
 
 openapi3 {
@@ -79,7 +81,7 @@ openapi3 {
 				description = "Local Server"
 			},
 			{
-				url = "http://dev.orbitalarm.net"
+				url = "https://dev.orbitalarm.net"
 				description = "Dev Server"
 			}
 	]

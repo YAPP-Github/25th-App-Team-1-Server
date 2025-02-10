@@ -15,6 +15,13 @@ spring:
       hibernate:
         format_sql: true
 
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    url: /docs/openapi3.json
+    path: /swagger-ui/index.html
+
 discord:
   webhook:
     url: {DISCORD_WEBHOOK_URL}
