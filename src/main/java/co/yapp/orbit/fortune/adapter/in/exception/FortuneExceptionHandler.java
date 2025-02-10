@@ -1,6 +1,7 @@
 package co.yapp.orbit.fortune.adapter.in.exception;
 
 import co.yapp.orbit.fortune.adapter.out.exception.FortuneFetchException;
+import co.yapp.orbit.fortune.application.exception.FortuneNotFoundException;
 import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.exception.InvalidFortuneCommandException;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,12 @@ public class FortuneExceptionHandler {
     public ResponseEntity<String> handleFortuneFetchException(FortuneFetchException e) {
         log.error("Fortune Fetch Exception occured: {}", e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
+    }
+
+    @ExceptionHandler(FortuneNotFoundException.class)
+    public ResponseEntity<String> handleFortuneNotFoundException(FortuneNotFoundException e) {
+        log.error("Fortune Not Found Exception occured: {}", e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

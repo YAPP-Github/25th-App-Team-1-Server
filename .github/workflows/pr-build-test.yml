@@ -50,4 +50,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GEMINI_URL: ${{ secrets.GEMINI_URL }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: ./gradlew build sonar --info --stacktrace
