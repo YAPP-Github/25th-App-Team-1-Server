@@ -28,9 +28,9 @@ springdoc:
 
 discord:
   webhook:
-    url: {DISCORD_WEBHOOK_URL}
+    url: ss
 
 gemini:
   api:
-    url: ${GEMINI_URL}
-    key: ${GEMINI_KEY}
+    url: ss
+    key: ss
