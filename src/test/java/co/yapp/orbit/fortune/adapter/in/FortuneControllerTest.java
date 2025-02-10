@@ -48,7 +48,7 @@ class FortuneControllerTest {
     @DisplayName("운세 생성에 성공 시, 200 OK 응답 반환")
     void createFortune_ok() throws Exception {
         // given
-        Fortune fortune = Fortune.from(
+        Fortune fortune = Fortune.create(
             1L,
             "Today is a great day!",
             new FortuneItem(90, "Success in studies"),
@@ -123,7 +123,7 @@ class FortuneControllerTest {
     void loadFortune_ok() throws Exception {
         // given
         Long fortuneId = 1L;
-        Fortune fortune = Fortune.from(
+        Fortune fortune = Fortune.create(
             fortuneId,
             "Today is a great day!",
             new FortuneItem(90, "Success in studies"),

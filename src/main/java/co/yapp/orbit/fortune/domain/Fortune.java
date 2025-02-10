@@ -49,7 +49,7 @@ public class Fortune {
         this.luckyFood = luckyFood;
     }
 
-    public static Fortune from(Long id, String dailyFortune, FortuneItem studyCareerFortune,
+    public static Fortune create(Long id, String dailyFortune, FortuneItem studyCareerFortune,
         FortuneItem wealthFortune, FortuneItem healthFortune, FortuneItem loveFortune,
         String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
         String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {

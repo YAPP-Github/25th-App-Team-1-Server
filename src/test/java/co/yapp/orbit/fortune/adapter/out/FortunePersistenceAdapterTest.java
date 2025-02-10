@@ -31,7 +31,7 @@ class FortunePersistenceAdapterTest {
     @DisplayName("Fortune 도메인 객체를 DB에 저장하고 id를 반환한다.")
     void save() {
         // given
-        Fortune fortune = Fortune.from(
+        Fortune fortune = Fortune.create(
             null,
             "Today is a great day!",
             new FortuneItem(90, "Success in studies"),
@@ -62,7 +62,7 @@ class FortunePersistenceAdapterTest {
     @DisplayName("요청한 id에 해당하는 Fortune 도메인 객체를 반환한다.")
     void findById() {
         // given
-        Fortune fortune = Fortune.from(
+        Fortune fortune = Fortune.create(
             null,
             "Today is a great day!",
             new FortuneItem(90, "Success in studies"),

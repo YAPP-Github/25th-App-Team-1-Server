@@ -32,7 +32,7 @@ class LoadFortuneServiceTest {
     void loadFortune() {
         // given
         Long fortuneId = 1L;
-        Fortune fortune = Fortune.from(
+        Fortune fortune = Fortune.create(
             fortuneId,
             "Today is a great day!",
             new FortuneItem(90, "Success in studies"),

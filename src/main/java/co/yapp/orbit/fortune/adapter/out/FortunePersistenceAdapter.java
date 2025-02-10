@@ -46,7 +46,7 @@ public class FortunePersistenceAdapter implements SaveFortunePort, LoadFortunePo
     @Override
     public Optional<Fortune> findById(Long id) {
         return fortuneRepository.findById(id)
-            .map(entity -> Fortune.from(
+            .map(entity -> Fortune.create(
                 entity.getId(),
                 entity.getDailyFortune(),
                 new FortuneItem(entity.getStudyCareerFortune().getScore(), entity.getStudyCareerFortune().getDescription()),

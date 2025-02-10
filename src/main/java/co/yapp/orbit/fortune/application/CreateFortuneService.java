@@ -42,7 +42,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
         Long fortuneId = saveFortunePort.save(fortune);
 
-        return Fortune.from(
+        return Fortune.create(
             fortuneId,
             fortune.getDailyFortune(),
             fortune.getStudyCareerFortune(),
@@ -95,7 +95,7 @@ public class CreateFortuneService implements CreateFortuneUseCase {
             String luckyColor = rootNode.path("lucky_color").asText();
             String luckyFood = rootNode.path("lucky_food").asText();
 
-            return Fortune.from(null, dailyFortune, studyCareerFortune, wealthFortune,
+            return Fortune.create(null, dailyFortune, studyCareerFortune, wealthFortune,
                 healthFortune, loveFortune, luckyOutfitTop, luckyOutfitBottom, luckyOutfitShoes,
                 luckyOutfitAccessory, unluckyColor, luckyColor, luckyFood);
 
