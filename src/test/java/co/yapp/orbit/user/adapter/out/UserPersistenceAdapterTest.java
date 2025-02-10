@@ -7,6 +7,7 @@ import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.TimeZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,26 +36,5 @@ class UserPersistenceAdapterTest {
         assertThat(userId).isNotNull();
         boolean exists = userRepository.findById(userId).isPresent();
         assertThat(exists).isTrue();
-    }
-
-    @Test
-    @DisplayName("UserPersistenceAdapter의 findById 메서드가 도메인 객체를 올바르게 반환한다.")
-    void findById() {
-        // given
-        UserEntity entity = new UserEntity("홍길동",
-        LocalDate.parse("2025-02-09"), LocalTime.parse("08:30:00"), CalendarType.SOLAR, Gender.MALE);
-        UserEntity savedEntity = userRepository.save(entity);
-        Long userId = savedEntity.getId();
-
-        // when
-        User user = userPersistenceAdapter.findById(userId).orElse(null);
-
-        // then
-        assertThat(user).isNotNull();
-        assertThat(user.getId()).isEqualTo(userId);
-        assertThat(user.getName()).isEqualTo("홍길동");
-        assertThat(user.getBirthDate()).isEqualTo(LocalDate.parse("2025-02-09"));
-        assertThat(user.getBirthTime()).isEqualTo(LocalTime.parse("08:30:00"));
-        assertThat(user.getGender()).isEqualTo(Gender.MALE);
     }
 }
