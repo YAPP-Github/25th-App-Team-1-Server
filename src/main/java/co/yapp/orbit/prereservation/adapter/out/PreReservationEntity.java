@@ -1,5 +1,6 @@
 package co.yapp.orbit.prereservation.adapter.out;
 
+import co.yapp.orbit.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +11,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "pre_reservation")
-public class PreReservationEntity {
+public class PreReservationEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,10 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(properties = {"discord.webhook.url=http://dummy-url.com"})
+@ActiveProfiles("test")
+@SpringBootTest
 class PreReservationPersistenceAdapterTest {
 
     @Autowired
@@ -57,13 +59,13 @@ class PreReservationPersistenceAdapterTest {
     @DisplayName("PreReservation 도메인 객체를 DB에 정상적으로 저장")
     void save() {
         // given
-        PreReservation domain = new PreReservation("홍길동", "010-1234-5678");
+        PreReservation domain = new PreReservation("byungwook-min@naver.com", "010-1234-5678");
 
         // when
         preReservationPersistenceAdapter.save(domain);
 
         // then
-        boolean exists = preReservationRepository.existsByEmailAndPhoneNumber("홍길동", "010-1234-5678");
+        boolean exists = preReservationRepository.existsByEmailAndPhoneNumber("byungwook-min@naver.com", "010-1234-5678");
         assertThat(exists).isTrue();
     }
 }
