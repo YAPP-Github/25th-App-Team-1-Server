@@ -18,10 +18,10 @@ public class FortunePersistenceAdapter implements SaveFortunePort, LoadFortunePo
 
     @Override
     public Long save(Fortune fortune) {
-        FortuneItemEntity studyCareerFortune = new FortuneItemEntity(fortune.getStudyCareerFortune().getScore(), fortune.getStudyCareerFortune().getDescription());
-        FortuneItemEntity wealthFortune = new FortuneItemEntity(fortune.getWealthFortune().getScore(), fortune.getWealthFortune().getDescription());
-        FortuneItemEntity healthFortune = new FortuneItemEntity(fortune.getHealthFortune().getScore(), fortune.getHealthFortune().getDescription());
-        FortuneItemEntity loveFortune = new FortuneItemEntity(fortune.getLoveFortune().getScore(), fortune.getLoveFortune().getDescription());
+        FortuneItemEntity studyCareerFortune = new FortuneItemEntity(fortune.getStudyCareerFortune().getScore(), fortune.getStudyCareerFortune().getTitle(), fortune.getStudyCareerFortune().getDescription());
+        FortuneItemEntity wealthFortune = new FortuneItemEntity(fortune.getWealthFortune().getScore(), fortune.getWealthFortune().getTitle(), fortune.getWealthFortune().getDescription());
+        FortuneItemEntity healthFortune = new FortuneItemEntity(fortune.getHealthFortune().getScore(), fortune.getHealthFortune().getTitle(), fortune.getHealthFortune().getDescription());
+        FortuneItemEntity loveFortune = new FortuneItemEntity(fortune.getLoveFortune().getScore(), fortune.getLoveFortune().getTitle(), fortune.getLoveFortune().getDescription());
 
         FortuneEntity fortuneEntity = FortuneEntity.builder()
             .dailyFortune(fortune.getDailyFortune())
@@ -49,10 +49,10 @@ public class FortunePersistenceAdapter implements SaveFortunePort, LoadFortunePo
             .map(entity -> Fortune.create(
                 entity.getId(),
                 entity.getDailyFortune(),
-                new FortuneItem(entity.getStudyCareerFortune().getScore(), entity.getStudyCareerFortune().getDescription()),
-                new FortuneItem(entity.getWealthFortune().getScore(), entity.getWealthFortune().getDescription()),
-                new FortuneItem(entity.getHealthFortune().getScore(), entity.getHealthFortune().getDescription()),
-                new FortuneItem(entity.getLoveFortune().getScore(), entity.getLoveFortune().getDescription()),
+                new FortuneItem(entity.getStudyCareerFortune().getScore(), entity.getStudyCareerFortune().getTitle(), entity.getStudyCareerFortune().getDescription()),
+                new FortuneItem(entity.getWealthFortune().getScore(), entity.getWealthFortune().getTitle(), entity.getWealthFortune().getDescription()),
+                new FortuneItem(entity.getHealthFortune().getScore(), entity.getHealthFortune().getTitle(), entity.getHealthFortune().getDescription()),
+                new FortuneItem(entity.getLoveFortune().getScore(), entity.getLoveFortune().getTitle(), entity.getLoveFortune().getDescription()),
                 entity.getLuckyOutfitTop(),
                 entity.getLuckyOutfitBottom(),
                 entity.getLuckyOutfitShoes(),

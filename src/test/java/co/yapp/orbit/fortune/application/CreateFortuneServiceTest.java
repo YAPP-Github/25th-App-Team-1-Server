@@ -8,11 +8,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import co.yapp.orbit.fortune.adapter.out.request.CreateFortuneRequest;
 import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.out.FortuneGenerationPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;
 import co.yapp.orbit.fortune.domain.Fortune;
+import co.yapp.orbit.fortune.domain.FortuneItem;
+import co.yapp.orbit.user.adapter.out.response.UserInfoResponse;
+import co.yapp.orbit.user.application.port.out.UserApiPort;
+import co.yapp.orbit.user.domain.CalendarType;
+import co.yapp.orbit.user.domain.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,16 +28,15 @@ class CreateFortuneServiceTest {
 
     private CreateFortuneService createFortuneService;
     private FortuneGenerationPort fortuneGenerationPort;
+    private UserApiPort userApiPort;
     private SaveFortunePort saveFortunePort;
-    private String mockResponse;
 
     @BeforeEach
     void setUp() {
         fortuneGenerationPort = Mockito.mock(FortuneGenerationPort.class);
         saveFortunePort = Mockito.mock(SaveFortunePort.class);
-        createFortuneService = new CreateFortuneService(fortuneGenerationPort, saveFortunePort, null);
-
-        mockResponse = "{ \"daily_fortune\": \"Good day!\", \"fortune\": { \"study_career\": {\"score\": 80, \"description\": \"Study well today!\"}, \"wealth\": {\"score\": 75, \"description\": \"A prosperous day!\"}, \"health\": {\"score\": 90, \"description\": \"Great health today!\"}, \"love\": {\"score\": 85, \"description\": \"Love is in the air!\"} }, \"lucky_outfit\": {\"top\": \"Blue\", \"bottom\": \"White\", \"shoes\": \"Black\", \"accessory\": \"Necklace\"}, \"unlucky_color\": \"Red\", \"lucky_color\": \"Green\", \"lucky_food\": \"Pizza\" }";
+        userApiPort = Mockito.mock(UserApiPort.class);
+        createFortuneService = new CreateFortuneService(fortuneGenerationPort, saveFortunePort, userApiPort);
     }
 
     @Test
@@ -39,32 +44,40 @@ class CreateFortuneServiceTest {
     void createFortune_thenSave() {
         // given
         CreateFortuneCommand command = new CreateFortuneCommand("1");
+        Fortune fortune = Fortune.create(
+            null,
+            "Today is a great day!",
+            new FortuneItem(90, "title1", "Success in studies"),
+            new FortuneItem(90, "title2", "Prosperity in finance"),
+            new FortuneItem(90, "title3", "Strong physical health"),
+            new FortuneItem(90, "title4", "Harmonious love life"),
+            "Red Shirt",
+            "Black Pants",
+            "White Sneakers",
+            "Gold Necklace",
+            "Green",
+            "Blue",
+            "Pizza"
+        );
+        UserInfoResponse userInfo = new UserInfoResponse(
+            "name",
+            "2025-02-09",
+            "08:30:00",
+            CalendarType.SOLAR.name(),
+            Gender.MALE.name()
+        );
 
-        when(fortuneGenerationPort.loadFortune()).thenReturn(mockResponse);
+        when(userApiPort.getUserInfo(1L)).thenReturn(userInfo);
+        when(fortuneGenerationPort.loadFortune(any())).thenReturn(fortune);
         when(saveFortunePort.save(any(Fortune.class))).thenReturn(1L);
 
         // when
-        Fortune fortune = createFortuneService.createFortune(command);
+        Fortune fortuneResponse = createFortuneService.createFortune(command);
 
         // then
-        verify(fortuneGenerationPort, times(1)).loadFortune();
+        verify(fortuneGenerationPort, times(1)).loadFortune(any());
         verify(saveFortunePort, times(1)).save(any(Fortune.class));
 
-        assertThat(fortune.getId()).isEqualTo(1L);
-    }
-
-    @Test
-    @DisplayName("운세 파싱 시 오류가 발생하면 FortuneParsingException이 발생한다.")
-    void createFortune_whenParseError_thenThrowException() {
-        // given
-        CreateFortuneCommand command = new CreateFortuneCommand("1");
-        String invalidResponse = "{ invalid json }";
-
-        when(fortuneGenerationPort.loadFortune()).thenReturn(invalidResponse);
-
-        // when & then
-        assertThrows(FortuneParsingException.class, () -> createFortuneService.createFortune(command));
-
-        verify(saveFortunePort, never()).save(any(Fortune.class));
+        assertThat(fortuneResponse.getId()).isEqualTo(1L);
     }
 }
