@@ -15,7 +15,7 @@ class FortuneAiAdapterTest {
 
     private MockWebServer mockWebServer;
 
-    private FortuneAiAdapter fortuneAiAdapter;
+    private FortuneGenerationAdapter fortuneAiAdapter;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -23,7 +23,7 @@ class FortuneAiAdapterTest {
         mockWebServer.start();
 
         String mockUrl = mockWebServer.url("/").toString();
-        fortuneAiAdapter = new FortuneAiAdapter(mockUrl, "my-api-key");
+        fortuneAiAdapter = new FortuneGenerationAdapter(mockUrl, "my-api-key");
     }
 
     @AfterEach

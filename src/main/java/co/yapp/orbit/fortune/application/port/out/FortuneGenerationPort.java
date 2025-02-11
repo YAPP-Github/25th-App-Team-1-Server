@@ -1,5 +1,5 @@
 package co.yapp.orbit.fortune.application.port.out;
 
-public interface FortuneAiPort {
+public interface FortuneGenerationPort {
     String loadFortune();
 }

@@ -2,19 +2,19 @@ package co.yapp.orbit.fortune.adapter.out;
 
 import co.yapp.orbit.fortune.adapter.out.exception.FortuneFetchException;
 import co.yapp.orbit.fortune.adapter.out.request.FortuneAiRequest;
-import co.yapp.orbit.fortune.adapter.out.response.FortuneAiResponse;
-import co.yapp.orbit.fortune.application.port.out.FortuneAiPort;
+import co.yapp.orbit.fortune.adapter.out.response.FortuneGenerationResponse;
+import co.yapp.orbit.fortune.application.port.out.FortuneGenerationPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
-public class FortuneAiAdapter implements FortuneAiPort {
+public class FortuneGenerationAdapter implements FortuneGenerationPort {
 
     private final WebClient webClient;
     private final String geminiFullUrl;
 
-    public FortuneAiAdapter(
+    public FortuneGenerationAdapter(
         @Value("${gemini.api.url}") String geminiApiUrl,
         @Value("${gemini.api.key}") String geminiApiKey
     ) {
@@ -48,11 +48,11 @@ public class FortuneAiAdapter implements FortuneAiPort {
     }
 
     public String callAi(String prompt) {
-        FortuneAiResponse response = webClient.post()
+        FortuneGenerationResponse response = webClient.post()
             .uri(geminiFullUrl)
             .bodyValue(new FortuneAiRequest(prompt))
             .retrieve()
-            .bodyToMono(FortuneAiResponse.class)
+            .bodyToMono(FortuneGenerationResponse.class)
             .block();
 
         return response.getCandidates().get(0).getContent().getParts().get(0).getText();
