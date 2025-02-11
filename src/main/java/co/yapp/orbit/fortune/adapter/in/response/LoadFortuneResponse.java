@@ -57,24 +57,28 @@ public class LoadFortuneResponse {
             .studyCareerFortune(
                 FortuneItemResponse.builder()
                     .score(fortune.getStudyCareerFortune().getScore())
+                    .title(fortune.getStudyCareerFortune().getTitle())
                     .description(fortune.getStudyCareerFortune().getDescription())
                     .build()
             )
             .wealthFortune(
                 FortuneItemResponse.builder()
                     .score(fortune.getWealthFortune().getScore())
+                    .title(fortune.getWealthFortune().getTitle())
                     .description(fortune.getWealthFortune().getDescription())
                     .build()
             )
             .healthFortune(
                 FortuneItemResponse.builder()
                     .score(fortune.getHealthFortune().getScore())
+                    .title(fortune.getHealthFortune().getTitle())
                     .description(fortune.getHealthFortune().getDescription())
                     .build()
             )
             .loveFortune(
                 FortuneItemResponse.builder()
                     .score(fortune.getLoveFortune().getScore())
+                    .title(fortune.getLoveFortune().getTitle())
                     .description(fortune.getLoveFortune().getDescription())
                     .build()
             )
@@ -91,11 +95,13 @@ public class LoadFortuneResponse {
     @Getter
     public static class FortuneItemResponse {
         private final int score;
+        private final String title;
         private final String description;
 
         @Builder
-        public FortuneItemResponse(int score, String description) {
+        public FortuneItemResponse(int score, String title, String description) {
             this.score = score;
+            this.title = title;
             this.description = description;
         }
     }

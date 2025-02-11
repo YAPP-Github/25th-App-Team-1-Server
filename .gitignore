@@ -39,5 +39,4 @@ out/
 ### Mac ###
 .DS_Store
 
-/build/
-/src/main/resources/static/swagger-ui/openapi3.json
+/src/main/resources/static/docs/

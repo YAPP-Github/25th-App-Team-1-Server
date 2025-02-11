@@ -7,10 +7,12 @@ import lombok.Getter;
 public class FortuneItem {
 
     private int score;
+    private String title;
     private String description;
 
-    public FortuneItem(int score, String description) {
+    public FortuneItem(int score, String title, String description) {
         this.score = score;
+        this.title = title;
         this.description = description;
     }
 
@@ -20,12 +22,12 @@ public class FortuneItem {
             return false;
         }
         FortuneItem that = (FortuneItem) o;
-        return getScore() == that.getScore() && Objects.equals(getDescription(),
-            that.getDescription());
+        return getScore() == that.getScore() && Objects.equals(getTitle(), that.getTitle())
+            && Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getScore(), getDescription());
+        return Objects.hash(getScore(), getTitle(), getDescription());
     }
 }
