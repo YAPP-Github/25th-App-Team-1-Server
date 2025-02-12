@@ -1,8 +1,9 @@
 package co.yapp.orbit.fortune.adapter.in.exception;
 
-import co.yapp.orbit.fortune.adapter.out.exception.FortuneFetchException;
+import co.yapp.orbit.fortune.adapter.out.exception.FortuneParsingException;
+import co.yapp.orbit.fortune.adapter.out.exception.WebClientFetchException;
+import co.yapp.orbit.fortune.application.exception.FortuneCreateInvalidUserException;
 import co.yapp.orbit.fortune.application.exception.FortuneNotFoundException;
-import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.exception.InvalidFortuneCommandException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class FortuneExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
-    @ExceptionHandler(FortuneFetchException.class)
-    public ResponseEntity<String> handleFortuneFetchException(FortuneFetchException e) {
+    @ExceptionHandler(WebClientFetchException.class)
+    public ResponseEntity<String> handleFortuneFetchException(WebClientFetchException e) {
         log.error("Fortune Fetch Exception occured: {}", e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
     }
@@ -35,6 +36,12 @@ public class FortuneExceptionHandler {
     @ExceptionHandler(FortuneNotFoundException.class)
     public ResponseEntity<String> handleFortuneNotFoundException(FortuneNotFoundException e) {
         log.error("Fortune Not Found Exception occured: {}", e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(FortuneCreateInvalidUserException.class)
+    public ResponseEntity<String> handleFortuneCreateInvalidUserException(FortuneCreateInvalidUserException e) {
+        log.error("Fortune Create Invalid User Exception: {}", e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 

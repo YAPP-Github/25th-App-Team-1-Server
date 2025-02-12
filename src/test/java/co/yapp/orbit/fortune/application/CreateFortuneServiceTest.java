@@ -1,15 +1,11 @@
 package co.yapp.orbit.fortune.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import co.yapp.orbit.fortune.adapter.out.request.CreateFortuneRequest;
-import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.out.FortuneGenerationPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;

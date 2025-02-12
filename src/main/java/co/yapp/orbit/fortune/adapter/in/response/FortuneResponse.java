@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class LoadFortuneResponse {
+public class FortuneResponse {
 
     private final Long id;
 
@@ -27,7 +27,7 @@ public class LoadFortuneResponse {
     private final String luckyFood;
 
     @Builder
-    public LoadFortuneResponse(Long id, String dailyFortune, int avgFortuneScore,
+    public FortuneResponse(Long id, String dailyFortune, int avgFortuneScore,
         FortuneItemResponse studyCareerFortune, FortuneItemResponse wealthFortune,
         FortuneItemResponse healthFortune, FortuneItemResponse loveFortune, String luckyOutfitTop,
         String luckyOutfitBottom, String luckyOutfitShoes, String luckyOutfitAccessory,
@@ -48,9 +48,9 @@ public class LoadFortuneResponse {
         this.luckyFood = luckyFood;
     }
 
-    public static LoadFortuneResponse from(Fortune fortune) {
+    public static FortuneResponse from(Fortune fortune) {
 
-        return LoadFortuneResponse.builder()
+        return FortuneResponse.builder()
             .id(fortune.getId())
             .dailyFortune(fortune.getDailyFortune())
             .avgFortuneScore(fortune.getAvgFortuneScore())
