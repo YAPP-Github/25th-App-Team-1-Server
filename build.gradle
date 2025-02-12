@@ -67,7 +67,7 @@ tasks.named('test') {
 }
 
 tasks.register("copyOasToSwagger", Copy) {
-	dependsOn 'openapi3', 'test'
+	dependsOn 'openapi3'
 	doFirst {
 		delete('src/main/resources/static/docs/openapi3.json')
 	}
@@ -128,10 +128,14 @@ jacocoTestReport {
 			fileTree(dir: it, excludes: [
 					'**/*Application*',
 					'**/*Controller*',
-					'**/config/**',
-					'**/request/**',
-					'**/response/**',
-					'**/exception/**',
+					'**/config/*',
+					'**/*Config*',
+					'**/request/*',
+					'**/*Request*',
+					'**/response/*',
+					'**/*Response*',
+					'**/exception/*',
+					'**/*Exception*'
 			])
 		}))
 	}
@@ -161,10 +165,14 @@ jacocoTestCoverageVerification {
 			excludes = [
 					'**.*Application*',
 					'**.*Controller*',
-					'**.config.**',
-					'**.request.**',
-					'**.response.**',
-					'**.exception.**',
+					'**.config.*',
+					'**.request.*',
+					'**.response.*',
+					'**.exception.*',
+					'**.*Config*',
+					'**.*Request*',
+					'**.*Response*',
+					'**.*Exception*'
 			]
 		}
 	}
