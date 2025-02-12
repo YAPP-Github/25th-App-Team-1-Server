@@ -1,0 +1,291 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Orbit API",
+    "description" : "오르비 백엔드 API 명세서입니다.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://dev.orbitalarm.net",
+    "description" : "Dev Server"
+  }, {
+    "url" : "http://localhost:8080",
+    "description" : "Local Server"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/api/v1/fortunes" : {
+      "post" : {
+        "tags" : [ "Fortune" ],
+        "summary" : "운세 생성 API",
+        "description" : "운세 생성 API",
+        "operationId" : "userId가 숫자가 아닐 경우, 400 BAD REQUESTuserId가 유효하지 않을 경우, 400 BAD REQUEST외부 API 요청 중 오류 발생 시, 502 BAD GATEWAY운세 생성 200 OK운세 파싱 중 오류 발생 시, 500 INTERNAL SERVER ERROR존재하지 않는 사용자일 경우, 404 NOT FOUND",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "사용자 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "404" : {
+            "description" : "404",
+            "content" : {
+              "text/plain;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                },
+                "examples" : {
+                  "존재하지 않는 사용자일 경우, 404 NOT FOUND" : {
+                    "value" : "사용자를 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Fortune"
+                },
+                "examples" : {
+                  "운세 생성 200 OK" : {
+                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortune\" : \"Today is a great day!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "text/plain;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                },
+                "examples" : {
+                  "userId가 유효하지 않을 경우, 400 BAD REQUEST" : {
+                    "value" : "user id는 null 또는 빈 문자열일 수 없습니다."
+                  },
+                  "userId가 숫자가 아닐 경우, 400 BAD REQUEST" : {
+                    "value" : "user id는 숫자여야 합니다."
+                  }
+                }
+              }
+            }
+          },
+          "502" : {
+            "description" : "502",
+            "content" : {
+              "text/plain;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                },
+                "examples" : {
+                  "외부 API 요청 중 오류 발생 시, 502 BAD GATEWAY" : {
+                    "value" : "운세 데이터 요청 중 오류가 발생했습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "500",
+            "content" : {
+              "text/plain;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                },
+                "examples" : {
+                  "운세 파싱 중 오류 발생 시, 500 INTERNAL SERVER ERROR" : {
+                    "value" : "운세 데이터를 처리하는 과정에서 오류가 발생했습니다."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fortunes/{fortuneId}" : {
+      "get" : {
+        "tags" : [ "Fortune" ],
+        "summary" : "운세 조회 API",
+        "description" : "운세 조회 API",
+        "operationId" : "운세 조회 200 OK존재하지 않는 운세인 경우, 404 NOT FOUND",
+        "parameters" : [ {
+          "name" : "fortuneId",
+          "in" : "path",
+          "description" : "오늘 생성된 운세 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "404" : {
+            "description" : "404",
+            "content" : {
+              "text/plain;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                },
+                "examples" : {
+                  "존재하지 않는 운세인 경우, 404 NOT FOUND" : {
+                    "value" : "해당 운세를 찾을 수 없습니다. 운세 생성을 요청해주세요."
+                  }
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Fortune"
+                },
+                "examples" : {
+                  "운세 조회 200 OK" : {
+                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortune\" : \"Today is a great day!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Exception" : {
+        "title" : "Exception",
+        "type" : "object"
+      },
+      "Fortune" : {
+        "title" : "Fortune",
+        "required" : [ "avgFortuneScore", "dailyFortune", "id", "luckyColor", "luckyFood", "luckyOutfitAccessory", "luckyOutfitBottom", "luckyOutfitShoes", "luckyOutfitTop", "unluckyColor" ],
+        "type" : "object",
+        "properties" : {
+          "luckyOutfitBottom" : {
+            "type" : "string",
+            "description" : "행운의 의상 하의"
+          },
+          "luckyColor" : {
+            "type" : "string",
+            "description" : "행운의 색깔"
+          },
+          "wealthFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "재물운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "재물운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "재물운 제목"
+              }
+            }
+          },
+          "healthFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "건강운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "건강운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "건강운 제목"
+              }
+            }
+          },
+          "luckyOutfitShoes" : {
+            "type" : "string",
+            "description" : "행운의 의상 신발"
+          },
+          "unluckyColor" : {
+            "type" : "string",
+            "description" : "불운의 색깔"
+          },
+          "luckyOutfitTop" : {
+            "type" : "string",
+            "description" : "행운의 의상 상의"
+          },
+          "luckyFood" : {
+            "type" : "string",
+            "description" : "행운의 음식"
+          },
+          "luckyOutfitAccessory" : {
+            "type" : "string",
+            "description" : "행운의 의상 액세서리"
+          },
+          "avgFortuneScore" : {
+            "type" : "number",
+            "description" : "운세 평균 점수"
+          },
+          "studyCareerFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "학업운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "학업운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "학업운 제목"
+              }
+            }
+          },
+          "dailyFortune" : {
+            "type" : "string",
+            "description" : "오늘의 운세 메시지"
+          },
+          "id" : {
+            "type" : "number",
+            "description" : "운세 ID"
+          },
+          "loveFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "사랑운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "사랑운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "사랑운 제목"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
