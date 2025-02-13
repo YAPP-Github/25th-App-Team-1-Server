@@ -1,6 +1,6 @@
 package co.yapp.orbit.fortune.adapter.in;
 
-import co.yapp.orbit.fortune.adapter.in.response.LoadFortuneResponse;
+import co.yapp.orbit.fortune.adapter.in.response.FortuneResponse;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneUseCase;
 import co.yapp.orbit.fortune.application.port.in.LoadFortuneUseCase;
@@ -30,7 +30,7 @@ public class FortuneController {
         CreateFortuneCommand command = new CreateFortuneCommand(userId);
         Fortune fortune = createFortuneUseCase.createFortune(command);
 
-        LoadFortuneResponse response = LoadFortuneResponse.from(fortune);
+        FortuneResponse response = FortuneResponse.from(fortune);
 
         return ResponseEntity.ok().body(response);
     }
@@ -39,7 +39,7 @@ public class FortuneController {
     public ResponseEntity<?> getFortune(@PathVariable("fortuneId") String fortuneId) {
         Fortune fortune = loadFortuneUseCase.loadFortune(Long.valueOf(fortuneId));
 
-        LoadFortuneResponse response = LoadFortuneResponse.from(fortune);
+        FortuneResponse response = FortuneResponse.from(fortune);
         return ResponseEntity.ok().body(response);
     }
 }

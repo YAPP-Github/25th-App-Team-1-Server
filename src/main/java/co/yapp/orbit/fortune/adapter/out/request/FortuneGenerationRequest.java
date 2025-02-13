@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FortuneAiRequest {
+public class FortuneGenerationRequest {
 
     private List<Content> contents;
 
@@ -21,7 +21,7 @@ public class FortuneAiRequest {
         private String text;
     }
 
-    public FortuneAiRequest(String prompt) {
+    public FortuneGenerationRequest(String prompt) {
         this.contents = new ArrayList<>();
         Content content = new Content();
 

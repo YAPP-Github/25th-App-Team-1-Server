@@ -11,8 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class FortunePersistenceAdapterTest {
 
@@ -34,10 +36,10 @@ class FortunePersistenceAdapterTest {
         Fortune fortune = Fortune.create(
             null,
             "Today is a great day!",
-            new FortuneItem(90, "Success in studies"),
-            new FortuneItem(90, "Prosperity in finance"),
-            new FortuneItem(90, "Strong physical health"),
-            new FortuneItem(90, "Harmonious love life"),
+            new FortuneItem(90, "title1", "Success in studies"),
+            new FortuneItem(90, "title2", "Prosperity in finance"),
+            new FortuneItem(90, "title3", "Strong physical health"),
+            new FortuneItem(90, "title4", "Harmonious love life"),
             "Red Shirt",
             "Black Pants",
             "White Sneakers",
@@ -65,10 +67,10 @@ class FortunePersistenceAdapterTest {
         Fortune fortune = Fortune.create(
             null,
             "Today is a great day!",
-            new FortuneItem(90, "Success in studies"),
-            new FortuneItem(90, "Prosperity in finance"),
-            new FortuneItem(90, "Strong physical health"),
-            new FortuneItem(90, "Harmonious love life"),
+            new FortuneItem(90, "title1", "Success in studies"),
+            new FortuneItem(90, "title2", "Prosperity in finance"),
+            new FortuneItem(90, "title3", "Strong physical health"),
+            new FortuneItem(90, "title4", "Harmonious love life"),
             "Red Shirt",
             "Black Pants",
             "White Sneakers",

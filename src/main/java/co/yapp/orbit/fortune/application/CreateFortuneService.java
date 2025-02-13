@@ -1,17 +1,15 @@
 package co.yapp.orbit.fortune.application;
 
-import co.yapp.orbit.fortune.application.exception.FortuneParsingException;
+import co.yapp.orbit.fortune.adapter.out.request.CreateFortuneRequest;
+import co.yapp.orbit.fortune.application.exception.FortuneCreateInvalidUserException;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneCommand;
 import co.yapp.orbit.fortune.application.port.in.CreateFortuneUseCase;
-import co.yapp.orbit.fortune.application.port.out.FortuneAiPort;
+import co.yapp.orbit.fortune.application.port.out.FortuneGenerationPort;
 import co.yapp.orbit.fortune.application.port.out.SaveFortunePort;
 import co.yapp.orbit.fortune.domain.Fortune;
-import co.yapp.orbit.fortune.domain.FortuneItem;
-import co.yapp.orbit.user.application.port.out.LoadUserPort;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
+import co.yapp.orbit.user.adapter.out.response.UserInfoResponse;
+import co.yapp.orbit.user.application.exception.UserNotFoundException;
+import co.yapp.orbit.user.application.port.out.UserApiPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,25 +18,37 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class CreateFortuneService implements CreateFortuneUseCase {
 
-    private final FortuneAiPort fortuneAiPort;
+    private final FortuneGenerationPort fortuneGenerationPort;
     private final SaveFortunePort saveFortunePort;
-    private final LoadUserPort loadUserPort;
+    private final UserApiPort userApiPort;
 
-    public CreateFortuneService(FortuneAiPort fortuneAiPort, SaveFortunePort saveFortunePort, LoadUserPort loadUserPort) {
-        this.fortuneAiPort = fortuneAiPort;
+    public CreateFortuneService(FortuneGenerationPort fortuneGenerationPort,
+        SaveFortunePort saveFortunePort, UserApiPort userApiPort) {
+        this.fortuneGenerationPort = fortuneGenerationPort;
         this.saveFortunePort = saveFortunePort;
-        this.loadUserPort = loadUserPort;
+        this.userApiPort = userApiPort;
     }
 
     @Override
     @Transactional
     public Fortune createFortune(CreateFortuneCommand command) {
-        // TODO: 사용자 정보 프롬프트에 추가
-        // User user = loadUserPort.findById(command.getUserId());
-        // CreateFortuneRequest request = new CreateFortuneRequest(user.getName(), user.getBirthday(), user.getBirthTime(), user.getGender());
+        CreateFortuneRequest request = null;
 
-        String response = fortuneAiPort.loadFortune();
-        Fortune fortune = parseStringToFortune(response);
+        try {
+            UserInfoResponse userInfo = userApiPort.getUserInfo(command.getUserId());
+            request = new CreateFortuneRequest(
+                userInfo.getName(),
+                userInfo.getBirthDate(),
+                userInfo.getBirthTime(),
+                userInfo.getCalendarType(),
+                userInfo.getGender());
+
+        } catch (UserNotFoundException e) {
+            log.error("운세 생성 중 UserNotFoundException 발생: {}", command.getUserId(), e);
+            throw new FortuneCreateInvalidUserException("존재하지 않는 사용자입니다.");
+        }
+
+        Fortune fortune = fortuneGenerationPort.loadFortune(request);
 
         Long fortuneId = saveFortunePort.save(fortune);
 
@@ -57,51 +67,5 @@ public class CreateFortuneService implements CreateFortuneUseCase {
             fortune.getLuckyColor(),
             fortune.getLuckyFood()
         );
-    }
-
-    private Fortune parseStringToFortune(String response) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response);
-
-            String dailyFortune = rootNode.path("daily_fortune").asText();
-
-            JsonNode fortuneNode = rootNode.path("fortune");
-
-            FortuneItem studyCareerFortune = new FortuneItem(
-                fortuneNode.path("study_career").path("score").asInt(),
-                fortuneNode.path("study_career").path("description").asText()
-            );
-            FortuneItem wealthFortune = new FortuneItem(
-                fortuneNode.path("wealth").path("score").asInt(),
-                fortuneNode.path("wealth").path("description").asText()
-            );
-            FortuneItem healthFortune = new FortuneItem(
-                fortuneNode.path("health").path("score").asInt(),
-                fortuneNode.path("health").path("description").asText()
-            );
-            FortuneItem loveFortune = new FortuneItem(
-                fortuneNode.path("love").path("score").asInt(),
-                fortuneNode.path("love").path("description").asText()
-            );
-
-            JsonNode luckyOutfitNode = rootNode.path("lucky_outfit");
-            String luckyOutfitTop = luckyOutfitNode.path("top").asText();
-            String luckyOutfitBottom = luckyOutfitNode.path("bottom").asText();
-            String luckyOutfitShoes = luckyOutfitNode.path("shoes").asText();
-            String luckyOutfitAccessory = luckyOutfitNode.path("accessory").asText();
-
-            String unluckyColor = rootNode.path("unlucky_color").asText();
-            String luckyColor = rootNode.path("lucky_color").asText();
-            String luckyFood = rootNode.path("lucky_food").asText();
-
-            return Fortune.create(null, dailyFortune, studyCareerFortune, wealthFortune,
-                healthFortune, loveFortune, luckyOutfitTop, luckyOutfitBottom, luckyOutfitShoes,
-                luckyOutfitAccessory, unluckyColor, luckyColor, luckyFood);
-
-        } catch (JsonProcessingException e) {
-            log.error("JSON 파싱 오류: {}", response, e);
-            throw new FortuneParsingException("운세 데이터를 처리하는 과정에서 오류가 발생했습니다.");
-        }
     }
 }

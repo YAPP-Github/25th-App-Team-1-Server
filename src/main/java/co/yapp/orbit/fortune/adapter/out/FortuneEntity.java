@@ -32,6 +32,7 @@ public class FortuneEntity {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "score", column = @Column(name = "STUDY_CAREER_SCORE")),
+        @AttributeOverride(name = "title", column = @Column(name = "STUDY_CAREER_TITLE")),
         @AttributeOverride(name = "description", column = @Column(name = "STUDY_CAREER_DESCRIPTION"))
     })
     private FortuneItemEntity studyCareerFortune;
@@ -39,6 +40,7 @@ public class FortuneEntity {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "score", column = @Column(name = "WEALTH_SCORE")),
+        @AttributeOverride(name = "title", column = @Column(name = "WEALTH_TITLE")),
         @AttributeOverride(name = "description", column = @Column(name = "WEALTH_DESCRIPTION"))
     })
     private FortuneItemEntity wealthFortune;
@@ -46,6 +48,7 @@ public class FortuneEntity {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "score", column = @Column(name = "HEALTH_SCORE")),
+        @AttributeOverride(name = "title", column = @Column(name = "HEALTH_TITLE")),
         @AttributeOverride(name = "description", column = @Column(name = "HEALTH_DESCRIPTION"))
     })
     private FortuneItemEntity healthFortune;
@@ -53,6 +56,7 @@ public class FortuneEntity {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "score", column = @Column(name = "LOVE_SCORE")),
+        @AttributeOverride(name = "title", column = @Column(name = "LOVE_TITLE")),
         @AttributeOverride(name = "description", column = @Column(name = "LOVE_DESCRIPTION"))
     })
     private FortuneItemEntity loveFortune;

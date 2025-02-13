@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 public class FortuneItemEntity {
 
     private int score;
+    private String title;
     private String description;
 
-    public FortuneItemEntity(int score, String description) {
+    public FortuneItemEntity(int score, String title, String description) {
         this.score = score;
+        this.title = title;
         this.description = description;
     }
 }

@@ -78,12 +78,12 @@ tasks.register("copyOasToSwagger", Copy) {
 openapi3 {
 	servers = [
 			{
-				url = "http://localhost:8080"
-				description = "Local Server"
-			},
-			{
 				url = "https://dev.orbitalarm.net"
 				description = "Dev Server"
+			},
+			{
+				url = "http://localhost:8080"
+				description = "Local Server"
 			}
 	]
 	title = "Orbit API"
@@ -129,9 +129,13 @@ jacocoTestReport {
 					'**/*Application*',
 					'**/*Controller*',
 					'**/config/*',
+					'**/*Config*',
 					'**/request/*',
+					'**/*Request*',
 					'**/response/*',
+					'**/*Response*',
 					'**/exception/*',
+					'**/*Exception*'
 			])
 		}))
 	}
@@ -165,6 +169,10 @@ jacocoTestCoverageVerification {
 					'**.request.*',
 					'**.response.*',
 					'**.exception.*',
+					'**.*Config*',
+					'**.*Request*',
+					'**.*Response*',
+					'**.*Exception*'
 			]
 		}
 	}
