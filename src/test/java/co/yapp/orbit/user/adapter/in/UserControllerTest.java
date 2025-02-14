@@ -1,17 +1,22 @@
 package co.yapp.orbit.user.adapter.in;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import co.yapp.orbit.user.adapter.in.request.SaveUserRequest;
+import co.yapp.orbit.user.adapter.in.request.UpdateUserRequest;
 import co.yapp.orbit.user.application.exception.UserNotFoundException;
 import co.yapp.orbit.user.application.port.in.LoadUserUseCase;
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
 import co.yapp.orbit.user.application.port.in.SaveUserCommand;
+import co.yapp.orbit.user.application.port.in.UpdateUserCommand;
+import co.yapp.orbit.user.application.port.in.UpdateUserUseCase;
 import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
@@ -41,6 +46,10 @@ class UserControllerTest {
 
     @MockitoBean
     private LoadUserUseCase getUserUseCase;
+
+    @MockitoBean
+    private UpdateUserUseCase updateUserUseCase;
+
 
     @Test
     @DisplayName("사용자 등록 성공 시 200 OK와 사용자 id를 반환한다.")
@@ -133,5 +142,20 @@ class UserControllerTest {
             .andExpect(jsonPath("$.birthDate").value("2025-02-09"))
             .andExpect(jsonPath("$.birthTime").value("08:30"))
             .andExpect(jsonPath("$.gender").value("MALE"));
+    }
+
+    @Test
+    @DisplayName("사용자 수정 성공 시 204 No Content를 반환한다.")
+    void updateUser_success() throws Exception {
+        Long userId = 1L;
+        UpdateUserRequest request = new UpdateUserRequest("홍길동", "2025-02-09", "08:30:00", "SOLAR", "MALE");
+        String json = objectMapper.writeValueAsString(request);
+
+        Mockito.doNothing().when(updateUserUseCase).updateUser(eq(userId), any(UpdateUserCommand.class));
+
+        mockMvc.perform(put("/api/v1/users/{id}", userId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+            .andExpect(status().isNoContent());
     }
 }

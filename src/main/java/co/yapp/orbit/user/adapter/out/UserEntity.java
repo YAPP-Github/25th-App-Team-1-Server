@@ -45,4 +45,12 @@ public class UserEntity extends BaseTimeEntity {
         this.calendarType = calendarType;
         this.gender = gender;
     }
+
+    public void update(String name, LocalDate birthDate, LocalTime birthTime, CalendarType calendarType, Gender gender) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.birthTime = birthTime;
+        this.calendarType = calendarType;
+        this.gender = gender;
+    }
 }
