@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import co.yapp.orbit.user.adapter.in.request.SaveUserRequest;
 import co.yapp.orbit.user.application.port.in.LoadUserUseCase;
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
-import co.yapp.orbit.user.application.port.in.UserCommand;
+import co.yapp.orbit.user.application.port.in.SaveUserCommand;
 import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
@@ -66,7 +66,7 @@ class UserControllerDocumentTest {
             "홍길동", "2025-02-09", "08:30:00", "SOLAR", "MALE");
         String json = objectMapper.writeValueAsString(request);
 
-        Mockito.when(saveUserUseCase.saveUser(any(UserCommand.class)))
+        Mockito.when(saveUserUseCase.saveUser(any(SaveUserCommand.class)))
             .thenReturn(1L);
 
         // when & then

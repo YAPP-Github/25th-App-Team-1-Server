@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import co.yapp.orbit.user.application.port.in.UserCommand;
+import co.yapp.orbit.user.application.port.in.SaveUserCommand;
 import co.yapp.orbit.user.application.port.out.SaveUserPort;
 import co.yapp.orbit.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ class SaveUserServiceTest {
     @DisplayName("사용자 저장 시, 유효한 요청이면 생성된 사용자 id를 반환한다.")
     void saveUser_success() {
         // given
-        UserCommand command = new UserCommand("홍길동", "2025-02-09", "08:30:00", "SOLAR", "MALE");
+        SaveUserCommand command = new SaveUserCommand("홍길동", "2025-02-09", "08:30:00", "SOLAR", "MALE");
         Long expectedId = 1L;
         when(saveUserPort.save(any(User.class))).thenReturn(expectedId);
 

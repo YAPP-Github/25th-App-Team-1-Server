@@ -11,7 +11,7 @@ import co.yapp.orbit.user.adapter.in.request.SaveUserRequest;
 import co.yapp.orbit.user.application.exception.UserNotFoundException;
 import co.yapp.orbit.user.application.port.in.LoadUserUseCase;
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
-import co.yapp.orbit.user.application.port.in.UserCommand;
+import co.yapp.orbit.user.application.port.in.SaveUserCommand;
 import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
@@ -47,7 +47,7 @@ class UserControllerTest {
     void saveUser_success() throws Exception {
         // given
         Long userId = 1L;
-        Mockito.when(saveUserUseCase.saveUser(any(UserCommand.class)))
+        Mockito.when(saveUserUseCase.saveUser(any(SaveUserCommand.class)))
             .thenReturn(userId);
 
         SaveUserRequest request = new SaveUserRequest("홍길동", "2025-02-09", "08:30:00", "SOLAR",
@@ -93,7 +93,7 @@ class UserControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         Mockito.doThrow(new IllegalArgumentException("No enum constant"))
-            .when(saveUserUseCase).saveUser(any(UserCommand.class));
+            .when(saveUserUseCase).saveUser(any(SaveUserCommand.class));
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)

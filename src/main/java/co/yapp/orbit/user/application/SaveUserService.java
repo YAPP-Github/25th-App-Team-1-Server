@@ -1,7 +1,7 @@
 package co.yapp.orbit.user.application;
 
 import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
-import co.yapp.orbit.user.application.port.in.UserCommand;
+import co.yapp.orbit.user.application.port.in.SaveUserCommand;
 import co.yapp.orbit.user.application.port.out.SaveUserPort;
 import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
@@ -22,7 +22,7 @@ public class SaveUserService implements SaveUserUseCase {
 
     @Transactional
     @Override
-    public Long saveUser(UserCommand command) {
+    public Long saveUser(SaveUserCommand command) {
         LocalDate birthDate = LocalDate.parse(command.birthDate());
         LocalTime birthTime = LocalTime.parse(command.birthTime());
         Gender gender = Gender.valueOf(command.gender().toUpperCase());
