@@ -2,5 +2,5 @@ package co.yapp.orbit.user.application.port.in;
 
 public interface SaveUserUseCase {
 
-    Long saveUser(UserCommand command);
+    Long saveUser(SaveUserCommand command);
 }

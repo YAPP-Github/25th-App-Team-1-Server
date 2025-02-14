@@ -2,8 +2,14 @@ package co.yapp.orbit.user.application.port.in;
 
 import co.yapp.orbit.user.application.exception.InvalidUserCommandException;
 
-public record UserCommand(String name, String birthDate, String birthTime, String calendarType, String gender) {
-    public UserCommand {
+public record SaveUserCommand(
+    String name,
+    String birthDate,
+    String birthTime,
+    String calendarType,
+    String gender)
+{
+    public SaveUserCommand {
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidUserCommandException("이름(name)은 null 또는 빈 값일 수 없습니다.");
         }

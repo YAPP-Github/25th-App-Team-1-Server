@@ -1,8 +1,8 @@
 package co.yapp.orbit.user.application;
 
-import co.yapp.orbit.user.application.port.in.SaveUserUseCase;
-import co.yapp.orbit.user.application.port.in.SaveUserCommand;
-import co.yapp.orbit.user.application.port.out.SaveUserPort;
+import co.yapp.orbit.user.application.port.in.UpdateUserCommand;
+import co.yapp.orbit.user.application.port.in.UpdateUserUseCase;
+import co.yapp.orbit.user.application.port.out.UpdateUserPort;
 import co.yapp.orbit.user.domain.CalendarType;
 import co.yapp.orbit.user.domain.Gender;
 import co.yapp.orbit.user.domain.User;
@@ -12,17 +12,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class SaveUserService implements SaveUserUseCase {
+public class UpdateUserService implements UpdateUserUseCase {
 
-    private final SaveUserPort saveUserPort;
+    private final UpdateUserPort updateUserPort;
 
-    public SaveUserService(SaveUserPort saveUserPort) {
-        this.saveUserPort = saveUserPort;
+    public UpdateUserService(UpdateUserPort updateUserPort) {
+        this.updateUserPort = updateUserPort;
     }
 
     @Transactional
     @Override
-    public Long saveUser(SaveUserCommand command) {
+    public void updateUser(Long id, UpdateUserCommand command) {
         LocalDate birthDate = LocalDate.parse(command.birthDate());
         LocalTime birthTime;
         if (command.birthTime() == null || command.birthTime().trim().isEmpty()) {
@@ -33,7 +33,8 @@ public class SaveUserService implements SaveUserUseCase {
         }
         Gender gender = Gender.valueOf(command.gender().toUpperCase());
         CalendarType calendarType = CalendarType.valueOf(command.calendarType().toUpperCase());
-        User user = new User(null, command.name(), birthDate, birthTime, calendarType, gender);
-        return saveUserPort.save(user);
+
+        User updatedUser = new User(id, command.name(), birthDate, birthTime, calendarType, gender);
+        updateUserPort.update(updatedUser);
     }
 }

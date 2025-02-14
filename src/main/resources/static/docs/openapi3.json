@@ -258,18 +258,48 @@
             }
           }
         }
+      },
+      "put" : {
+        "tags" : [ "User" ],
+        "summary" : "사용자 수정 API",
+        "description" : "사용자 정보를 수정하는 API (전체 덮어쓰기 방식)",
+        "operationId" : "users-update",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "수정할 사용자 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateUserRequest"
+              },
+              "examples" : {
+                "users-update" : {
+                  "value" : "{\n  \"name\" : \"홍길동\",\n  \"birthDate\" : \"2025-02-09\",\n  \"birthTime\" : \"08:30:00\",\n  \"calendarType\" : \"SOLAR\",\n  \"gender\" : \"MALE\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "204" : {
+            "description" : "204"
+          }
+        }
       }
     }
   },
   "components" : {
     "schemas" : {
-      "Exception" : {
-        "title" : "Exception",
-        "type" : "object"
-      },
-      "User" : {
-        "title" : "User",
-        "required" : [ "birthDate", "birthTime", "calendarType", "gender", "id", "name" ],
+      "UpdateUserRequest" : {
+        "title" : "UpdateUserRequest",
+        "required" : [ "birthDate", "birthTime", "calendarType", "gender", "name" ],
         "type" : "object",
         "properties" : {
           "calendarType" : {
@@ -278,7 +308,7 @@
           },
           "gender" : {
             "type" : "string",
-            "description" : "사용자의 성"
+            "description" : "사용자의 성별 (MALE, FEMALE 등)"
           },
           "name" : {
             "type" : "string",
@@ -286,11 +316,7 @@
           },
           "birthTime" : {
             "type" : "string",
-            "description" : "사용자의 출생시간 (HH:mm:ss)"
-          },
-          "id" : {
-            "type" : "number",
-            "description" : "사용자 ID"
+            "description" : "사용자의 출생시간 (HH:mm)"
           },
           "birthDate" : {
             "type" : "string",
@@ -298,8 +324,8 @@
           }
         }
       },
-      "UserId" : {
-        "title" : "UserId",
+      "Exception" : {
+        "title" : "Exception",
         "type" : "object"
       },
       "SaveUserRequest" : {
@@ -321,7 +347,42 @@
           },
           "birthTime" : {
             "type" : "string",
-            "description" : "사용자의 출생시간 (HH:mm:ss)"
+            "description" : "사용자의 출생시간 (HH:mm)"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "description" : "사용자의 생년월일 (yyyy-MM-dd)"
+          }
+        }
+      },
+      "UserId" : {
+        "title" : "UserId",
+        "type" : "object"
+      },
+      "User" : {
+        "title" : "User",
+        "required" : [ "birthDate", "birthTime", "calendarType", "gender", "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "calendarType" : {
+            "type" : "string",
+            "description" : "달력 타입 (SOLAR, LUNAR 등)"
+          },
+          "gender" : {
+            "type" : "string",
+            "description" : "사용자의 성"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "사용자의 이름"
+          },
+          "birthTime" : {
+            "type" : "string",
+            "description" : "사용자의 출생시간 (HH:mm)"
+          },
+          "id" : {
+            "type" : "number",
+            "description" : "사용자 ID"
           },
           "birthDate" : {
             "type" : "string",
