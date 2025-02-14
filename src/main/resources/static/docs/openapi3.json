@@ -111,6 +111,72 @@
         }
       }
     },
+    "/api/v1/prereservations" : {
+      "post" : {
+        "tags" : [ "PreReservation" ],
+        "summary" : "사전 예약 생성 API",
+        "description" : "사전 예약을 신청하는 API",
+        "operationId" : "prereservations-create",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PreReservationCreateRequest"
+              },
+              "examples" : {
+                "prereservations-create" : {
+                  "value" : "{\n  \"email\" : \"byungwook-min@naver.com\",\n  \"phoneNumber\" : \"010-1234-5678\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200"
+          }
+        }
+      }
+    },
+    "/api/v1/users" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "사용자 등록 API",
+        "description" : "사용자를 등록하는 API",
+        "operationId" : "users-create",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SaveUserRequest"
+              },
+              "examples" : {
+                "users-create" : {
+                  "value" : "{\n  \"name\" : \"홍길동\",\n  \"birthDate\" : \"2025-02-09\",\n  \"birthTime\" : \"08:30:00\",\n  \"calendarType\" : \"SOLAR\",\n  \"gender\" : \"MALE\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserId"
+                },
+                "examples" : {
+                  "users-create" : {
+                    "value" : "1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/fortunes/{fortuneId}" : {
       "get" : {
         "tags" : [ "Fortune" ],
@@ -159,6 +225,40 @@
           }
         }
       }
+    },
+    "/api/v1/users/{id}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "사용자 조회 API",
+        "description" : "사용자 정보를 조회하는 API",
+        "operationId" : "users-get",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "사용자 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                },
+                "examples" : {
+                  "users-get" : {
+                    "value" : "{\n  \"id\" : 1,\n  \"name\" : \"홍길동\",\n  \"birthDate\" : \"2025-02-09\",\n  \"birthTime\" : \"08:30\",\n  \"calendarType\" : \"SOLAR\",\n  \"gender\" : \"MALE\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -166,6 +266,83 @@
       "Exception" : {
         "title" : "Exception",
         "type" : "object"
+      },
+      "User" : {
+        "title" : "User",
+        "required" : [ "birthDate", "birthTime", "calendarType", "gender", "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "calendarType" : {
+            "type" : "string",
+            "description" : "달력 타입 (SOLAR, LUNAR 등)"
+          },
+          "gender" : {
+            "type" : "string",
+            "description" : "사용자의 성"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "사용자의 이름"
+          },
+          "birthTime" : {
+            "type" : "string",
+            "description" : "사용자의 출생시간 (HH:mm:ss)"
+          },
+          "id" : {
+            "type" : "number",
+            "description" : "사용자 ID"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "description" : "사용자의 생년월일 (yyyy-MM-dd)"
+          }
+        }
+      },
+      "UserId" : {
+        "title" : "UserId",
+        "type" : "object"
+      },
+      "SaveUserRequest" : {
+        "title" : "SaveUserRequest",
+        "required" : [ "birthDate", "birthTime", "calendarType", "gender", "name" ],
+        "type" : "object",
+        "properties" : {
+          "calendarType" : {
+            "type" : "string",
+            "description" : "달력 타입 (SOLAR, LUNAR 등)"
+          },
+          "gender" : {
+            "type" : "string",
+            "description" : "사용자의 성별 (MALE, FEMALE 등)"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "사용자의 이름"
+          },
+          "birthTime" : {
+            "type" : "string",
+            "description" : "사용자의 출생시간 (HH:mm:ss)"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "description" : "사용자의 생년월일 (yyyy-MM-dd)"
+          }
+        }
+      },
+      "PreReservationCreateRequest" : {
+        "title" : "PreReservationCreateRequest",
+        "required" : [ "email", "phoneNumber" ],
+        "type" : "object",
+        "properties" : {
+          "phoneNumber" : {
+            "type" : "string",
+            "description" : "사전 예약을 신청하는 사용자의 전화번호"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "사전 예약을 신청하는 사용자의 이메일 주소"
+          }
+        }
       },
       "Fortune" : {
         "title" : "Fortune",
