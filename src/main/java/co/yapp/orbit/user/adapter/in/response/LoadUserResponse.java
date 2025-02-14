@@ -1,5 +1,7 @@
 package co.yapp.orbit.user.adapter.in.response;
 
+import co.yapp.orbit.user.domain.User;
+import java.time.LocalTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,12 +16,17 @@ public class LoadUserResponse {
     private String calendarType;
     private String gender;
 
-    public LoadUserResponse(Long id, String name, String birthDate, String birthTime, String calendarType, String gender) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.birthTime = birthTime;
-        this.gender = gender;
-        this.calendarType = calendarType;
+    public LoadUserResponse(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.birthDate = user.getBirthDate().toString();
+        LocalTime birthTime = user.getBirthTime();
+        if (birthTime == null) {
+            this.birthTime = null;
+        } else {
+            this.birthTime = birthTime.toString();
+        }
+        this.gender = user.getGender().toString();
+        this.calendarType = user.getCalendarType().toString();
     }
 }

@@ -43,13 +43,7 @@ public class UserController {
     public ResponseEntity<LoadUserResponse> getUser(@PathVariable("id") Long id) {
         User user = getUserUseCase.loadUser(id);
         LoadUserResponse response = new LoadUserResponse(
-            user.getId(),
-            user.getName(),
-            user.getBirthDate().toString(),
-            user.getBirthTime().toString(),
-            user.getCalendarType().toString(),
-            user.getGender().name()
-        );
+            user);
         return ResponseEntity.ok(response);
     }
 
