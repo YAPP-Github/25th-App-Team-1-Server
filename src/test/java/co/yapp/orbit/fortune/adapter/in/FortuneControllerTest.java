@@ -66,7 +66,8 @@ class FortuneControllerTest {
         // given
         Fortune fortune = Fortune.create(
             1L,
-            "Today is a great day!",
+            "윤다혜, 오늘은 기분 좋은 일들이 많을 거야!",
+            "긍정적인 마음으로 하루를 시작하면 좋은 결과가 있을 거 같아. 주변 사람들과의 관계도 원만하게 유지하면서 행복한 하루 보내길 바라!",
             new FortuneItem(90, "title1", "Success in studies"),
             new FortuneItem(90, "title2", "Prosperity in finance"),
             new FortuneItem(90, "title3", "Strong physical health"),
@@ -101,7 +102,8 @@ class FortuneControllerTest {
                     )
                     .responseFields(
                         fieldWithPath("id").type(NUMBER).description("운세 ID"),
-                        fieldWithPath("dailyFortune").type(STRING).description("오늘의 운세 메시지"),
+                        fieldWithPath("dailyFortuneTitle").type(STRING).description("오늘의 운세 제목"),
+                        fieldWithPath("dailyFortuneDescription").type(STRING).description("오늘의 운세 메시지"),
                         fieldWithPath("avgFortuneScore").type(NUMBER).description("운세 평균 점수"),
                         fieldWithPath("studyCareerFortune.score").type(NUMBER).description("학업운 점수"),
                         fieldWithPath("studyCareerFortune.title").type(STRING).description("학업운 제목"),
@@ -271,8 +273,9 @@ class FortuneControllerTest {
         // given
         Long fortuneId = 1L;
         Fortune fortune = Fortune.create(
-            fortuneId,
-            "Today is a great day!",
+            1L,
+            "윤다혜, 오늘은 기분 좋은 일들이 많을 거야!",
+            "긍정적인 마음으로 하루를 시작하면 좋은 결과가 있을 거 같아. 주변 사람들과의 관계도 원만하게 유지하면서 행복한 하루 보내길 바라!",
             new FortuneItem(90, "title1", "Success in studies"),
             new FortuneItem(90, "title2", "Prosperity in finance"),
             new FortuneItem(90, "title3", "Strong physical health"),
@@ -306,7 +309,8 @@ class FortuneControllerTest {
                     )
                     .responseFields(
                         fieldWithPath("id").type(NUMBER).description("운세 ID"),
-                        fieldWithPath("dailyFortune").type(STRING).description("오늘의 운세 메시지"),
+                        fieldWithPath("dailyFortuneTitle").type(STRING).description("오늘의 운세 제목"),
+                        fieldWithPath("dailyFortuneDescription").type(STRING).description("오늘의 운세 메시지"),
                         fieldWithPath("avgFortuneScore").type(NUMBER).description("운세 평균 점수"),
                         fieldWithPath("studyCareerFortune.score").type(NUMBER).description("학업운 점수"),
                         fieldWithPath("studyCareerFortune.title").type(STRING).description("학업운 제목"),

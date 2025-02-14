@@ -9,7 +9,8 @@ public class FortuneResponse {
 
     private final Long id;
 
-    private final String dailyFortune;
+    private final String dailyFortuneTitle;
+    private final String dailyFortuneDescription;
 
     private final int avgFortuneScore;
     private final FortuneItemResponse studyCareerFortune;
@@ -27,13 +28,14 @@ public class FortuneResponse {
     private final String luckyFood;
 
     @Builder
-    public FortuneResponse(Long id, String dailyFortune, int avgFortuneScore,
+    public FortuneResponse(Long id, String dailyFortuneTitle, String dailyFortuneDescription, int avgFortuneScore,
         FortuneItemResponse studyCareerFortune, FortuneItemResponse wealthFortune,
         FortuneItemResponse healthFortune, FortuneItemResponse loveFortune, String luckyOutfitTop,
         String luckyOutfitBottom, String luckyOutfitShoes, String luckyOutfitAccessory,
         String unluckyColor, String luckyColor, String luckyFood) {
         this.id = id;
-        this.dailyFortune = dailyFortune;
+        this.dailyFortuneTitle = dailyFortuneTitle;
+        this.dailyFortuneDescription = dailyFortuneDescription;
         this.avgFortuneScore = avgFortuneScore;
         this.studyCareerFortune = studyCareerFortune;
         this.wealthFortune = wealthFortune;
@@ -52,7 +54,8 @@ public class FortuneResponse {
 
         return FortuneResponse.builder()
             .id(fortune.getId())
-            .dailyFortune(fortune.getDailyFortune())
+            .dailyFortuneTitle(fortune.getDailyFortuneTitle())
+            .dailyFortuneDescription(fortune.getDailyFortuneDescription())
             .avgFortuneScore(fortune.getAvgFortuneScore())
             .studyCareerFortune(
                 FortuneItemResponse.builder()

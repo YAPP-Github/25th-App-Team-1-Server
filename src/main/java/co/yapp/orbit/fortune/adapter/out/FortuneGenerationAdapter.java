@@ -125,7 +125,8 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
 
             return Fortune.create(
                 null,
-                fortuneResponse.getDailyFortune(),
+                fortuneResponse.getDailyFortuneTitle(),
+                fortuneResponse.getDailyFortuneDescription(),
                 new FortuneItem(studyCareer.getScore(), studyCareer.getTitle(), studyCareer.getDescription()),
                 new FortuneItem(wealth.getScore(), wealth.getTitle(), wealth.getDescription()),
                 new FortuneItem(health.getScore(), health.getTitle(), health.getDescription()),

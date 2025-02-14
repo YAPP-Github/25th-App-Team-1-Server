@@ -41,8 +41,9 @@ class CreateFortuneServiceTest {
         // given
         CreateFortuneCommand command = new CreateFortuneCommand("1");
         Fortune fortune = Fortune.create(
-            null,
-            "Today is a great day!",
+            1L,
+            "윤다혜, 오늘은 기분 좋은 일들이 많을 거야!",
+            "긍정적인 마음으로 하루를 시작하면 좋은 결과가 있을 거 같아. 주변 사람들과의 관계도 원만하게 유지하면서 행복한 하루 보내길 바라!",
             new FortuneItem(90, "title1", "Success in studies"),
             new FortuneItem(90, "title2", "Prosperity in finance"),
             new FortuneItem(90, "title3", "Strong physical health"),

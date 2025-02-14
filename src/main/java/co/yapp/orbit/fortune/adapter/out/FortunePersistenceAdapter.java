@@ -24,7 +24,8 @@ public class FortunePersistenceAdapter implements SaveFortunePort, LoadFortunePo
         FortuneItemEntity loveFortune = new FortuneItemEntity(fortune.getLoveFortune().getScore(), fortune.getLoveFortune().getTitle(), fortune.getLoveFortune().getDescription());
 
         FortuneEntity fortuneEntity = FortuneEntity.builder()
-            .dailyFortune(fortune.getDailyFortune())
+            .dailyFortuneTitle(fortune.getDailyFortuneTitle())
+            .dailyFortuneDescription(fortune.getDailyFortuneDescription())
             .avgFortuneScore(fortune.getAvgFortuneScore())
             .studyCareerFortune(studyCareerFortune)
             .wealthFortune(wealthFortune)
@@ -48,7 +49,8 @@ public class FortunePersistenceAdapter implements SaveFortunePort, LoadFortunePo
         return fortuneRepository.findById(id)
             .map(entity -> Fortune.create(
                 entity.getId(),
-                entity.getDailyFortune(),
+                entity.getDailyFortuneTitle(),
+                entity.getDailyFortuneDescription(),
                 new FortuneItem(entity.getStudyCareerFortune().getScore(), entity.getStudyCareerFortune().getTitle(), entity.getStudyCareerFortune().getDescription()),
                 new FortuneItem(entity.getWealthFortune().getScore(), entity.getWealthFortune().getTitle(), entity.getWealthFortune().getDescription()),
                 new FortuneItem(entity.getHealthFortune().getScore(), entity.getHealthFortune().getTitle(), entity.getHealthFortune().getDescription()),

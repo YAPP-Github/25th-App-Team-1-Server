@@ -26,7 +26,8 @@ public class FortuneEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String dailyFortune;
+    private String dailyFortuneTitle;
+    private String dailyFortuneDescription;
     private int avgFortuneScore;
 
     @Embedded
@@ -75,13 +76,14 @@ public class FortuneEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    public FortuneEntity(String dailyFortune, int avgFortuneScore,
+    public FortuneEntity(String dailyFortuneTitle, String dailyFortuneDescription, int avgFortuneScore,
         FortuneItemEntity studyCareerFortune,
         FortuneItemEntity wealthFortune, FortuneItemEntity healthFortune,
         FortuneItemEntity loveFortune,
         String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
         String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {
-        this.dailyFortune = dailyFortune;
+        this.dailyFortuneTitle = dailyFortuneTitle;
+        this.dailyFortuneDescription = dailyFortuneDescription;
         this.avgFortuneScore = avgFortuneScore;
         this.studyCareerFortune = studyCareerFortune;
         this.wealthFortune = wealthFortune;

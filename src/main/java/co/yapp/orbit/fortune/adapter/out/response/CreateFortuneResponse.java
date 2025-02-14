@@ -9,16 +9,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateFortuneResponse {
 
-    private String dailyFortune;
+    private String dailyFortuneTitle;
+    private String dailyFortuneDescription;
     private Map<String, FortuneItemResponse> fortune; // "study_career", "wealth", "health", "love"
     private LuckyOutfitResponse luckyOutfit;
     private String unluckyColor;
     private String luckyColor;
     private String luckyFood;
 
-    public CreateFortuneResponse(String dailyFortune, Map<String, FortuneItemResponse> fortune, LuckyOutfitResponse luckyOutfit,
+    public CreateFortuneResponse(String dailyFortuneTitle, String dailyFortuneDescription, Map<String, FortuneItemResponse> fortune, LuckyOutfitResponse luckyOutfit,
         String unluckyColor, String luckyColor, String luckyFood) {
-        this.dailyFortune = dailyFortune;
+        this.dailyFortuneTitle = dailyFortuneTitle;
+        this.dailyFortuneDescription = dailyFortuneDescription;
         this.fortune = fortune;
         this.luckyOutfit = luckyOutfit;
         this.unluckyColor = unluckyColor;
@@ -26,9 +28,14 @@ public class CreateFortuneResponse {
         this.luckyFood = luckyFood;
     }
 
-    @JsonProperty("daily_fortune")
-    public String getDailyFortune() {
-        return dailyFortune;
+    @JsonProperty("daily_fortune_title")
+    public String getDailyFortuneTitle() {
+        return dailyFortuneTitle;
+    }
+
+    @JsonProperty("daily_fortune_description")
+    public String getDailyFortuneDescription() {
+        return dailyFortuneDescription;
     }
 
     @JsonProperty("fortune")
