@@ -24,7 +24,13 @@ public class SaveUserService implements SaveUserUseCase {
     @Override
     public Long saveUser(SaveUserCommand command) {
         LocalDate birthDate = LocalDate.parse(command.birthDate());
-        LocalTime birthTime = LocalTime.parse(command.birthTime());
+        LocalTime birthTime;
+        if (command.birthTime() == null || command.birthTime().trim().isEmpty()) {
+            birthTime = null;
+        }
+        else {
+            birthTime = LocalTime.parse(command.birthTime());
+        }
         Gender gender = Gender.valueOf(command.gender().toUpperCase());
         CalendarType calendarType = CalendarType.valueOf(command.calendarType().toUpperCase());
         User user = new User(null, command.name(), birthDate, birthTime, calendarType, gender);
