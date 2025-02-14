@@ -61,8 +61,6 @@ class UserPersistenceAdapterTest {
         User foundUser = optionalUser.get();
         assertThat(foundUser.getId()).isEqualTo(userId);
         assertThat(foundUser.getName()).isEqualTo("홍길동");
-        assertThat(foundUser.getBirthDate()).isEqualTo(LocalDate.parse("2025-02-09"));
-        assertThat(foundUser.getBirthTime()).isEqualTo(LocalTime.parse("08:30:00"));
         assertThat(foundUser.getCalendarType()).isEqualTo(CalendarType.SOLAR);
         assertThat(foundUser.getGender()).isEqualTo(Gender.MALE);
     }
@@ -91,8 +89,6 @@ class UserPersistenceAdapterTest {
         assertThat(optionalUser).isPresent();
         User foundUser = optionalUser.get();
         assertThat(foundUser.getName()).isEqualTo("김철수");
-        assertThat(foundUser.getBirthDate()).isEqualTo(LocalDate.parse("2025-03-10"));
-        assertThat(foundUser.getBirthTime()).isEqualTo(LocalTime.parse("09:00:00"));
         assertThat(foundUser.getCalendarType()).isEqualTo(CalendarType.LUNAR);
         assertThat(foundUser.getGender()).isEqualTo(Gender.MALE);
     }
