@@ -10,7 +10,8 @@ public class Fortune {
 
     private final Long id;
 
-    private final String dailyFortune;
+    private final String dailyFortuneTitle;
+    private final String dailyFortuneDescription;
 
     private final int avgFortuneScore;
     private final FortuneItem studyCareerFortune;
@@ -28,13 +29,14 @@ public class Fortune {
     private final String luckyFood;
 
     @Builder
-    public Fortune(Long id, String dailyFortune, int avgFortuneScore,
-        FortuneItem studyCareerFortune,
-        FortuneItem wealthFortune, FortuneItem healthFortune, FortuneItem loveFortune,
-        String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
-        String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {
+    public Fortune(Long id, String dailyFortuneTitle, String dailyFortuneDescription,
+        int avgFortuneScore, FortuneItem studyCareerFortune, FortuneItem wealthFortune,
+        FortuneItem healthFortune, FortuneItem loveFortune, String luckyOutfitTop,
+        String luckyOutfitBottom, String luckyOutfitShoes, String luckyOutfitAccessory,
+        String unluckyColor, String luckyColor, String luckyFood) {
         this.id = id;
-        this.dailyFortune = dailyFortune;
+        this.dailyFortuneTitle = dailyFortuneTitle;
+        this.dailyFortuneDescription = dailyFortuneDescription;
         this.avgFortuneScore = avgFortuneScore;
         this.studyCareerFortune = studyCareerFortune;
         this.wealthFortune = wealthFortune;
@@ -49,7 +51,7 @@ public class Fortune {
         this.luckyFood = luckyFood;
     }
 
-    public static Fortune create(Long id, String dailyFortune, FortuneItem studyCareerFortune,
+    public static Fortune create(Long id, String dailyFortuneTitle, String dailyFortuneDescription, FortuneItem studyCareerFortune,
         FortuneItem wealthFortune, FortuneItem healthFortune, FortuneItem loveFortune,
         String luckyOutfitTop, String luckyOutfitBottom, String luckyOutfitShoes,
         String luckyOutfitAccessory, String unluckyColor, String luckyColor, String luckyFood) {
@@ -63,7 +65,8 @@ public class Fortune {
 
         return Fortune.builder()
             .id(id)
-            .dailyFortune(dailyFortune)
+            .dailyFortuneTitle(dailyFortuneTitle)
+            .dailyFortuneDescription(dailyFortuneDescription)
             .avgFortuneScore(avgFortuneScore)
             .studyCareerFortune(studyCareerFortune)
             .wealthFortune(wealthFortune)
@@ -90,27 +93,27 @@ public class Fortune {
         }
         Fortune fortune = (Fortune) o;
         return getAvgFortuneScore() == fortune.getAvgFortuneScore() && Objects.equals(getId(),
-            fortune.getId()) && Objects.equals(getDailyFortune(), fortune.getDailyFortune())
-            && Objects.equals(getStudyCareerFortune(), fortune.getStudyCareerFortune())
-            && Objects.equals(getWealthFortune(), fortune.getWealthFortune())
-            && Objects.equals(getHealthFortune(), fortune.getHealthFortune())
-            && Objects.equals(getLoveFortune(), fortune.getLoveFortune())
-            && Objects.equals(getLuckyOutfitTop(), fortune.getLuckyOutfitTop())
-            && Objects.equals(getLuckyOutfitBottom(), fortune.getLuckyOutfitBottom())
-            && Objects.equals(getLuckyOutfitShoes(), fortune.getLuckyOutfitShoes())
-            && Objects.equals(getLuckyOutfitAccessory(), fortune.getLuckyOutfitAccessory())
-            && Objects.equals(getUnluckyColor(), fortune.getUnluckyColor())
-            && Objects.equals(getLuckyColor(), fortune.getLuckyColor())
-            && Objects.equals(getLuckyFood(), fortune.getLuckyFood());
+            fortune.getId()) && Objects.equals(getDailyFortuneTitle(),
+            fortune.getDailyFortuneTitle()) && Objects.equals(getDailyFortuneDescription(),
+            fortune.getDailyFortuneDescription()) && Objects.equals(getStudyCareerFortune(),
+            fortune.getStudyCareerFortune()) && Objects.equals(getWealthFortune(),
+            fortune.getWealthFortune()) && Objects.equals(getHealthFortune(),
+            fortune.getHealthFortune()) && Objects.equals(getLoveFortune(),
+            fortune.getLoveFortune()) && Objects.equals(getLuckyOutfitTop(),
+            fortune.getLuckyOutfitTop()) && Objects.equals(getLuckyOutfitBottom(),
+            fortune.getLuckyOutfitBottom()) && Objects.equals(getLuckyOutfitShoes(),
+            fortune.getLuckyOutfitShoes()) && Objects.equals(getLuckyOutfitAccessory(),
+            fortune.getLuckyOutfitAccessory()) && Objects.equals(getUnluckyColor(),
+            fortune.getUnluckyColor()) && Objects.equals(getLuckyColor(),
+            fortune.getLuckyColor()) && Objects.equals(getLuckyFood(),
+            fortune.getLuckyFood());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDailyFortune(), getAvgFortuneScore(),
-            getStudyCareerFortune(),
-            getWealthFortune(), getHealthFortune(), getLoveFortune(), getLuckyOutfitTop(),
-            getLuckyOutfitBottom(), getLuckyOutfitShoes(), getLuckyOutfitAccessory(),
-            getUnluckyColor(),
-            getLuckyColor(), getLuckyFood());
+        return Objects.hash(getId(), getDailyFortuneTitle(), getDailyFortuneDescription(),
+            getAvgFortuneScore(), getStudyCareerFortune(), getWealthFortune(), getHealthFortune(),
+            getLoveFortune(), getLuckyOutfitTop(), getLuckyOutfitBottom(), getLuckyOutfitShoes(),
+            getLuckyOutfitAccessory(), getUnluckyColor(), getLuckyColor(), getLuckyFood());
     }
 }

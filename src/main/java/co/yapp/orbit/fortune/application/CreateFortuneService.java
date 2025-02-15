@@ -54,7 +54,8 @@ public class CreateFortuneService implements CreateFortuneUseCase {
 
         return Fortune.create(
             fortuneId,
-            fortune.getDailyFortune(),
+            fortune.getDailyFortuneTitle(),
+            fortune.getDailyFortuneDescription(),
             fortune.getStudyCareerFortune(),
             fortune.getWealthFortune(),
             fortune.getHealthFortune(),

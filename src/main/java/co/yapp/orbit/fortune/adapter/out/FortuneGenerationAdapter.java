@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -31,7 +32,7 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
     private final String geminiFullUrl;
     private final ObjectMapper objectMapper;
 
-    private static final String PROMPT_FILE_PATH = "templates/prompts/fortune_prompt_v1.json";
+    private static final String PROMPT_FILE_PATH = "templates/prompts/fortune_prompt_v2.json";
     private final JsonNode promptTemplate;
 
     public FortuneGenerationAdapter(
@@ -99,6 +100,10 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
             ObjectNode copiedPrompt = promptTemplate.deepCopy();
             copiedPrompt.set("user_info", userInfoJson);
 
+            ObjectNode todayDateJson = objectMapper.createObjectNode();
+            todayDateJson.put("today_date", LocalDate.now().toString());
+            copiedPrompt.set("today_date", todayDateJson);
+
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(copiedPrompt);
         } catch (JsonProcessingException e) {
             log.error("프롬프트 템플릿 작성 오류: {}", request, e);
@@ -125,7 +130,8 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
 
             return Fortune.create(
                 null,
-                fortuneResponse.getDailyFortune(),
+                fortuneResponse.getDailyFortuneTitle(),
+                fortuneResponse.getDailyFortuneDescription(),
                 new FortuneItem(studyCareer.getScore(), studyCareer.getTitle(), studyCareer.getDescription()),
                 new FortuneItem(wealth.getScore(), wealth.getTitle(), wealth.getDescription()),
                 new FortuneItem(health.getScore(), health.getTitle(), health.getDescription()),

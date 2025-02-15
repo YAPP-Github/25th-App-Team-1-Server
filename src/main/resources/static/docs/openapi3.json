@@ -54,7 +54,7 @@
                 },
                 "examples" : {
                   "운세 생성 200 OK" : {
-                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortune\" : \"Today is a great day!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
+                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortuneTitle\" : \"윤다혜, 오늘은 기분 좋은 일들이 많을 거야!\",\n  \"dailyFortuneDescription\" : \"긍정적인 마음으로 하루를 시작하면 좋은 결과가 있을 거 같아. 주변 사람들과의 관계도 원만하게 유지하면서 행복한 하루 보내길 바라!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
                   }
                 }
               }
@@ -217,7 +217,7 @@
                 },
                 "examples" : {
                   "운세 조회 200 OK" : {
-                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortune\" : \"Today is a great day!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
+                    "value" : "{\n  \"id\" : 1,\n  \"dailyFortuneTitle\" : \"윤다혜, 오늘은 기분 좋은 일들이 많을 거야!\",\n  \"dailyFortuneDescription\" : \"긍정적인 마음으로 하루를 시작하면 좋은 결과가 있을 거 같아. 주변 사람들과의 관계도 원만하게 유지하면서 행복한 하루 보내길 바라!\",\n  \"avgFortuneScore\" : 90,\n  \"studyCareerFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title1\",\n    \"description\" : \"Success in studies\"\n  },\n  \"wealthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title2\",\n    \"description\" : \"Prosperity in finance\"\n  },\n  \"healthFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title3\",\n    \"description\" : \"Strong physical health\"\n  },\n  \"loveFortune\" : {\n    \"score\" : 90,\n    \"title\" : \"title4\",\n    \"description\" : \"Harmonious love life\"\n  },\n  \"luckyOutfitTop\" : \"Red Shirt\",\n  \"luckyOutfitBottom\" : \"Black Pants\",\n  \"luckyOutfitShoes\" : \"White Sneakers\",\n  \"luckyOutfitAccessory\" : \"Gold Necklace\",\n  \"unluckyColor\" : \"Green\",\n  \"luckyColor\" : \"Blue\",\n  \"luckyFood\" : \"Pizza\"\n}"
                   }
                 }
               }
@@ -328,6 +328,129 @@
         "title" : "Exception",
         "type" : "object"
       },
+      "Fortune" : {
+        "title" : "Fortune",
+        "required" : [ "avgFortuneScore", "dailyFortuneDescription", "dailyFortuneTitle", "id", "luckyColor", "luckyFood", "luckyOutfitAccessory", "luckyOutfitBottom", "luckyOutfitShoes", "luckyOutfitTop", "unluckyColor" ],
+        "type" : "object",
+        "properties" : {
+          "dailyFortuneTitle" : {
+            "type" : "string",
+            "description" : "오늘의 운세 제목"
+          },
+          "luckyOutfitBottom" : {
+            "type" : "string",
+            "description" : "행운의 의상 하의"
+          },
+          "luckyColor" : {
+            "type" : "string",
+            "description" : "행운의 색깔"
+          },
+          "wealthFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "재물운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "재물운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "재물운 제목"
+              }
+            }
+          },
+          "healthFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "건강운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "건강운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "건강운 제목"
+              }
+            }
+          },
+          "luckyOutfitShoes" : {
+            "type" : "string",
+            "description" : "행운의 의상 신발"
+          },
+          "unluckyColor" : {
+            "type" : "string",
+            "description" : "불운의 색깔"
+          },
+          "luckyOutfitTop" : {
+            "type" : "string",
+            "description" : "행운의 의상 상의"
+          },
+          "luckyFood" : {
+            "type" : "string",
+            "description" : "행운의 음식"
+          },
+          "luckyOutfitAccessory" : {
+            "type" : "string",
+            "description" : "행운의 의상 액세서리"
+          },
+          "dailyFortuneDescription" : {
+            "type" : "string",
+            "description" : "오늘의 운세 메시지"
+          },
+          "avgFortuneScore" : {
+            "type" : "number",
+            "description" : "운세 평균 점수"
+          },
+          "studyCareerFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "학업운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "학업운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "학업운 제목"
+              }
+            }
+          },
+          "id" : {
+            "type" : "number",
+            "description" : "운세 ID"
+          },
+          "loveFortune" : {
+            "required" : [ "description", "score", "title" ],
+            "type" : "object",
+            "properties" : {
+              "score" : {
+                "type" : "number",
+                "description" : "사랑운 점수"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "사랑운 설명"
+              },
+              "title" : {
+                "type" : "string",
+                "description" : "사랑운 제목"
+              }
+            }
+          }
+        }
+      },
       "SaveUserRequest" : {
         "title" : "SaveUserRequest",
         "required" : [ "birthDate", "birthTime", "calendarType", "gender", "name" ],
@@ -402,125 +525,6 @@
           "email" : {
             "type" : "string",
             "description" : "사전 예약을 신청하는 사용자의 이메일 주소"
-          }
-        }
-      },
-      "Fortune" : {
-        "title" : "Fortune",
-        "required" : [ "avgFortuneScore", "dailyFortune", "id", "luckyColor", "luckyFood", "luckyOutfitAccessory", "luckyOutfitBottom", "luckyOutfitShoes", "luckyOutfitTop", "unluckyColor" ],
-        "type" : "object",
-        "properties" : {
-          "luckyOutfitBottom" : {
-            "type" : "string",
-            "description" : "행운의 의상 하의"
-          },
-          "luckyColor" : {
-            "type" : "string",
-            "description" : "행운의 색깔"
-          },
-          "wealthFortune" : {
-            "required" : [ "description", "score", "title" ],
-            "type" : "object",
-            "properties" : {
-              "score" : {
-                "type" : "number",
-                "description" : "재물운 점수"
-              },
-              "description" : {
-                "type" : "string",
-                "description" : "재물운 설명"
-              },
-              "title" : {
-                "type" : "string",
-                "description" : "재물운 제목"
-              }
-            }
-          },
-          "healthFortune" : {
-            "required" : [ "description", "score", "title" ],
-            "type" : "object",
-            "properties" : {
-              "score" : {
-                "type" : "number",
-                "description" : "건강운 점수"
-              },
-              "description" : {
-                "type" : "string",
-                "description" : "건강운 설명"
-              },
-              "title" : {
-                "type" : "string",
-                "description" : "건강운 제목"
-              }
-            }
-          },
-          "luckyOutfitShoes" : {
-            "type" : "string",
-            "description" : "행운의 의상 신발"
-          },
-          "unluckyColor" : {
-            "type" : "string",
-            "description" : "불운의 색깔"
-          },
-          "luckyOutfitTop" : {
-            "type" : "string",
-            "description" : "행운의 의상 상의"
-          },
-          "luckyFood" : {
-            "type" : "string",
-            "description" : "행운의 음식"
-          },
-          "luckyOutfitAccessory" : {
-            "type" : "string",
-            "description" : "행운의 의상 액세서리"
-          },
-          "avgFortuneScore" : {
-            "type" : "number",
-            "description" : "운세 평균 점수"
-          },
-          "studyCareerFortune" : {
-            "required" : [ "description", "score", "title" ],
-            "type" : "object",
-            "properties" : {
-              "score" : {
-                "type" : "number",
-                "description" : "학업운 점수"
-              },
-              "description" : {
-                "type" : "string",
-                "description" : "학업운 설명"
-              },
-              "title" : {
-                "type" : "string",
-                "description" : "학업운 제목"
-              }
-            }
-          },
-          "dailyFortune" : {
-            "type" : "string",
-            "description" : "오늘의 운세 메시지"
-          },
-          "id" : {
-            "type" : "number",
-            "description" : "운세 ID"
-          },
-          "loveFortune" : {
-            "required" : [ "description", "score", "title" ],
-            "type" : "object",
-            "properties" : {
-              "score" : {
-                "type" : "number",
-                "description" : "사랑운 점수"
-              },
-              "description" : {
-                "type" : "string",
-                "description" : "사랑운 설명"
-              },
-              "title" : {
-                "type" : "string",
-                "description" : "사랑운 제목"
-              }
-            }
           }
         }
       }
