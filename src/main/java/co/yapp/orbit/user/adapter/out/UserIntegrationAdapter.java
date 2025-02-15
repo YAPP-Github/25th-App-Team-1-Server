@@ -20,7 +20,7 @@ public class UserIntegrationAdapter implements UserApiPort {
             .map(entity -> new UserInfoResponse(
                 entity.getName(),
                 entity.getBirthDate().toString(),
-                entity.getBirthTime().toString(),
+                entity.getBirthTime() != null ? entity.getBirthTime().toString() : null,
                 entity.getCalendarType().toString(),
                 entity.getGender().name()
             ))
