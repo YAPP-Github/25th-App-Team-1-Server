@@ -10,6 +10,7 @@ import lombok.Setter;
 public class FortuneGenerationRequest {
 
     private List<Content> contents;
+    private GenerationConfig generationConfig;
 
     @Getter @Setter
     public static class Content {
@@ -21,14 +22,23 @@ public class FortuneGenerationRequest {
         private String text;
     }
 
-    public FortuneGenerationRequest(String prompt) {
+    @Getter @Setter
+    public static class GenerationConfig {
+        private double temperature = 1.3;
+        private double topP = 0.9;
+        private long seed;
+    }
+
+    public FortuneGenerationRequest(String prompt, long seed) {
         this.contents = new ArrayList<>();
         Content content = new Content();
 
         Parts parts = new Parts();
         parts.setText(prompt);
         content.setParts(parts);
-
         this.contents.add(content);
+
+        this.generationConfig = new GenerationConfig();
+        this.generationConfig.setSeed(seed);
     }
 }
