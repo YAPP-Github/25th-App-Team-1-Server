@@ -58,7 +58,7 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
     @Override
     public Fortune loadFortune(CreateFortuneRequest request) {
         String prompt = generatePrompt(request);
-        String response = callAi(prompt);
+        String response = callAi(prompt, request.getName());
 
         if (response == null || response.trim().isEmpty()) {
             log.error("WebClient 요청 오류: {}", request);
@@ -68,11 +68,13 @@ public class FortuneGenerationAdapter implements FortuneGenerationPort {
         return parseStringToFortune(response);
     }
 
-    public String callAi(String prompt) {
+    public String callAi(String prompt, String userName) {
         try {
+            long seed = (LocalDate.now().toString() + userName).hashCode();
+
             FortuneGenerationResponse response = webClient.post()
                 .uri(geminiFullUrl)
-                .bodyValue(new FortuneGenerationRequest(prompt))
+                .bodyValue(new FortuneGenerationRequest(prompt, seed))
                 .retrieve()
                 .bodyToMono(FortuneGenerationResponse.class)
                 .block();
